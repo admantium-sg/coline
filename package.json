@@ -9,6 +9,9 @@
   "bin": {
     "mystl": "index.js"
   },
+  "dependencies": {
+    "mocha": "~5.2.0"
+  },
   "author": "Sebastian Günther",
   "email": "devcon@admantium.com",
   "license": "CC-BY-NC-4.0"
