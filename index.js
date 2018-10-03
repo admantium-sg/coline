@@ -1,10 +1,17 @@
 #!/usr/local/bin/node
-var exports = module.exports = {};
 
-exports.start = () => {
-   console.log('Mystery Lunch Planner');
+class MysteryLunch {
+   constructor() {
+      this.stdout = process.stdout;
+      this.prompt = "$: ";
+   }
+   
+   start() {
+      this.stdout.write('Mystery Lunch Planner');   
+   }
+   session() {
+      this.stdout.write(this.prompt);
+   }
 }
 
-exports.session = () => {
-   console.log('$: ');
-}
+module.exports = MysteryLunch;
