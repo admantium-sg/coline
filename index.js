@@ -1,2 +1,4 @@
 #!/usr/local/bin/node
-console.log('Mystery Lunch Planner');
+function start() {
+   console.log('Mystery Lunch Planner');
+}
