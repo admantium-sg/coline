@@ -15,6 +15,12 @@ describe("MysteryLunch", () => {
             mystl.start();
          })
          assert.equal(output,"Mystery Lunch Planner\n");
-      })
+      });
+      it("should show the prompt '$:'", () => {
+         var output = test_stdout.inspectSync( () => {
+            mystl.session();
+         })
+         assert.equal(output, "$: \n");
+      });
    })
 })

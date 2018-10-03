@@ -4,3 +4,7 @@ var exports = module.exports = {};
 exports.start = () => {
    console.log('Mystery Lunch Planner');
 }
+
+exports.session = () => {
+   console.log('$: ');
+}
