@@ -14,7 +14,7 @@ describe("MysteryLunch", () => {
          var output = test_stdout.inspectSync(() => {
             mystl.start();
          })
-         assert.equal(output,"Mystery Lunch Planner");
+         assert.equal(output,"Mystery Lunch Planner\n");
       })
    })
 })
