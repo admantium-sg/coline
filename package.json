@@ -1,0 +1,15 @@
+{
+  "name": "mystery_lunch_cli",
+  "version": "0.1.0",
+  "description": "A command line interface to plan mystery lunches. The user registers events and particpants through the command line. Then a concrete lunch is created by randomly forming groups from all the particopants. Why a mystery lunch? To initiate talking and knoweledge exchange with colleagues you ever wanted to go and eat out with, but out of habit never ask.",
+  "main": "index.js",
+  "scripts": {
+    "test": "test.js"
+  },
+  "bin": {
+    "mystl": "index.js"
+  },
+  "author": "Sebastian Günther",
+  "email": "devcon@admantium.com",
+  "license": "CC-BY-NC-4.0"
+}
