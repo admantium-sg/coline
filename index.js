@@ -11,7 +11,10 @@ class MysteryLunch {
       this.rprompt = "$> ";
       this.nl = "\r\n";
 
-      this.logfile = './mystl.log'
+      this.logfile = './mystl.log';
+      fs.unlink('./mystl.log', (err) => {
+         if(err) throw err;
+      });
    }
    
    start() {
@@ -24,6 +27,7 @@ class MysteryLunch {
          data = data.toString().trim();
 
          if(data !== 'exit') {
+            this.write_line(data);
             this.write_result("'" + data + "'");
             this.write_prompt();
          }
@@ -31,7 +35,7 @@ class MysteryLunch {
    }
 
    log(output) {
-      fs.writeFileSync('hist.log', output, (err) => {
+      fs.appendFileSync(this.logfile, output, (err) => {
          if(err) throw err;
       });
    }
@@ -54,8 +58,5 @@ class MysteryLunch {
       this.log(output);
    }
 }
-
-mystl = new MysteryLunch();
-mystl.start();
 
 module.exports = MysteryLunch;
