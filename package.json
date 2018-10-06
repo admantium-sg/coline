@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "mocha": "^5.2.0",
+    "mock-stdin": "^0.3.1",
     "test-console": "^1.1.0"
   },
   "author": "Sebastian Günther",

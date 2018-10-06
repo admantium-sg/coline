@@ -3,12 +3,9 @@
 var assert = require('assert');
 
 var test_stdout = require('test-console').stdout;
-var test_stdin = require('test-console').stdin;
-
+var test_stdin = require('mock-stdin').stdin();
 const MysteryLunch = require('./index');
 var mystl = new MysteryLunch();
-
-console.log(mystl.start());
 
 describe("MysteryLunch", () => {
    describe("#start()", () => {
@@ -25,6 +22,13 @@ describe("MysteryLunch", () => {
          match = /\$:/.test(initial_output);
          assert.ok(match);
       });
-      it("should echo 'Hello!' when I enter 'Hello'")
+      it("should echo 'Hello!' when I enter 'Hello'", () => {
+         var output = test_stdout.inspectSync( () => {
+            test_stdin.send('Hello!');
+         });
+         console.log(output);
+         match = /\$>\ \'Hello!\'/.test(output);
+         assert.ok(match);
+      });  
    })
 })
