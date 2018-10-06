@@ -1,20 +1,34 @@
 #!/usr/local/bin/mocha
 
 var assert = require('assert');
-var test_stdout = require('test-console').stdout;
-var mystl = require('./index');
 
-function start() {
-   console.log('Mystery Lunch Planner');
-}
+var test_stdout = require('test-console').stdout;
+var test_stdin = require('mock-stdin').stdin();
+const MysteryLunch = require('./index');
+var mystl = new MysteryLunch();
 
 describe("MysteryLunch", () => {
    describe("#start()", () => {
-      it("should print 'Mystery Lunch Planner' when started", () => {
-         var output = test_stdout.inspectSync(() => {
-            mystl.start();
-         })
-         assert.equal(output,"Mystery Lunch Planner\n");
+      var initial_output = test_stdout.inspectSync( () => {
+         mystl.start();
       })
+
+      it("should print 'Mystery Lunch Planner' when started", () => {
+         match = /Mystery Lunch Planner/.test(initial_output);
+         assert.ok(match);
+      });
+      
+      it("should show the prompt '$:'", () => {
+         match = /\$:/.test(initial_output);
+         assert.ok(match);
+      });
+      it("should echo 'Hello!' when I enter 'Hello'", () => {
+         var output = test_stdout.inspectSync( () => {
+            test_stdin.send('Hello!');
+         });
+         console.log(output);
+         match = /\$>\ \'Hello!\'/.test(output);
+         assert.ok(match);
+      });  
    })
 })
