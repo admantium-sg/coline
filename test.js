@@ -1,5 +1,5 @@
 #!/usr/local/bin/mocha
-
+//Prepare merge with branch "03_log_complete_session_in_file"
 var assert = require('assert');
 
 var test_stdout = require('test-console').stdout;
