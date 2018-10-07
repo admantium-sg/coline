@@ -1,14 +1,14 @@
 #!/usr/local/bin/mocha
-//Prepare merge with branch "03_log_complete_session_in_file"
 var assert = require('assert');
 
 var test_stdout = require('test-console').stdout;
 var test_stdin = require('mock-stdin').stdin();
+var fs = require('fs');
 const MysteryLunch = require('./index');
 var mystl = new MysteryLunch();
 
 describe("MysteryLunch", () => {
-   describe("#start()", () => {
+   describe("Startup and echoing 'Hello'", () => {
       var initial_output = test_stdout.inspectSync( () => {
          mystl.start();
       })
@@ -26,9 +26,26 @@ describe("MysteryLunch", () => {
          var output = test_stdout.inspectSync( () => {
             test_stdin.send('Hello!');
          });
-         console.log(output);
+         //console.log(output);
          match = /\$>\ \'Hello!\'/.test(output);
          assert.ok(match);
       });  
+      it("should log all commands in the logfile", () => {
+         var logfile_content = fs.readFileSync('./mystl.log', 'utf-8');
+         
+         //Expect Myster Lunch PLanner at the beginning
+         match = /^Mystery Lunch Planner\s/.test(logfile_content);
+         assert.ok(match);
+
+         match = /\$: Hello!/.test(logfile_content);
+         assert.ok(match);
+
+         match = /\$> 'Hello!'/.test(logfile_content);
+         assert.ok(match);
+
+         //Expect Prompt and space at the end of the file
+         match = /\$:\s$/.test(logfile_content);
+         assert.ok(match);
+      })
    })
 })
