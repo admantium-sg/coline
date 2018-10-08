@@ -26,11 +26,17 @@ class MysteryLunch {
       this.stdin.on('data', (data) => {
          data = data.toString().trim();
 
-         if(data !== 'exit') {
+         if(data === 'manage events') {
+            this.write_line(data);
+            this.write_result("Welcome to managing events. What do you want to do?");
+            this.write_result("-- (C) Create new event");
+            this.write_result("-- (S) Show all events");
+         }
+         else if (data !== 'exit'){
             this.write_line(data);
             this.write_result("'" + data + "'");
             this.write_prompt();
-         }
+         }          
       });
    }
 

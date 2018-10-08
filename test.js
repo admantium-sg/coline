@@ -48,4 +48,14 @@ describe("MysteryLunch", () => {
          assert.ok(match);
       })
    })
+   describe("Managaging events", () => {
+      it("should start the creation of an event when I type 'manage events'", () => {
+         var output = test_stdout.inspectSync( () => {
+            test_stdin.send('manage events');
+         });
+         //console.log(output);
+         match = /\$> Welcome to managing events\. What do you want to do\?/.test(output);
+         assert.ok(match);
+      })
+   })
 })
