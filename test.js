@@ -9,21 +9,22 @@ var mystl = new MysteryLunch();
 
 describe("MysteryLunch", () => {
    describe("Startup and echoing 'Hello'", () => {
-      var initial_output = test_stdout.inspectSync( () => {
-         mystl.start();
-      })
-
+      var output = "";
+   
       it("should print 'Mystery Lunch Planner' when started", () => {
-         match = /Mystery Lunch Planner/.test(initial_output);
+         output = test_stdout.inspectSync( () => {
+            mystl.start();
+         })
+         match = /Mystery Lunch Planner/.test(output);
          assert.ok(match);
       });
       
       it("should show the prompt '$:'", () => {
-         match = /\$:/.test(initial_output);
+         match = /\$:/.test(output);
          assert.ok(match);
       });
       it("should echo 'Hello!' when I enter 'Hello'", () => {
-         var output = test_stdout.inspectSync( () => {
+         output = test_stdout.inspectSync( () => {
             test_stdin.send('Hello!');
          });
          //console.log(output);
@@ -49,12 +50,20 @@ describe("MysteryLunch", () => {
       })
    })
    describe("Managaging events", () => {
+      output = "foo"
       it("should start the creation of an event when I type 'manage events'", () => {
-         var output = test_stdout.inspectSync( () => {
+         output = test_stdout.inspectSync( () => {
             test_stdin.send('manage events');
          });
          //console.log(output);
          match = /\$> Welcome to managing events\. What do you want to do\?/.test(output);
+         assert.ok(match);
+      })
+      it("should show the options 'Create New Event' and 'Show all events'", () => {
+         match = /Create new event/.test(output);
+         assert.ok(match);
+
+         match = /Show all events/.test(output);
          assert.ok(match);
       })
    })
