@@ -50,7 +50,7 @@ describe("MysteryLunch", () => {
       })
    })
    describe("Managaging events", () => {
-      output = "foo"
+      var output = "foo"
       it("should start the creation of an event when I type 'manage events'", () => {
          output = test_stdout.inspectSync( () => {
             test_stdin.send('manage events');
@@ -65,6 +65,28 @@ describe("MysteryLunch", () => {
 
          match = /Show all events/.test(output);
          assert.ok(match);
+      })
+      it("should show a test event with title = Mystery Lunch 1, date = 01.11.2018 and particapant = Sebastian, Janine", () => {
+         let event = {
+            title: 'Mystery Lunch 1',
+            date: new Date(2018-11-01),
+            participants: ['Sebastian', 'Janine'] 
+         };         
+         //msyst.addEvent(event);
+
+         output = test_stdout.inspectSync( () => {
+            test_stdin.send('C:');
+         });
+
+         match = /Mystery Lunch 1/.test(output);
+         assert.ok(match);
+
+         match = /2018-11-01/.test(output);
+         assert.ok(match);
+
+         match = /Sebastian, Janine/.test(output);
+         assert.ok(match);
+
       })
    })
 })
