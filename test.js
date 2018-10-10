@@ -4,8 +4,14 @@ var assert = require('assert');
 var test_stdout = require('test-console').stdout;
 var test_stdin = require('mock-stdin').stdin();
 var fs = require('fs');
-const MysteryLunch = require('./index');
+const MysteryLunch = require('./index').MysteryLunch;
 var mystl = new MysteryLunch();
+
+var testEvent = {
+   title: 'Mystery Lunch 1',
+   date: new Date('2018-11-01'),
+   participants: ['Sebastian', 'Janine'] 
+}; 
 
 describe("MysteryLunch", () => {
    describe("Startup and echoing 'Hello'", () => {
@@ -66,27 +72,21 @@ describe("MysteryLunch", () => {
          match = /Show all events/.test(output);
          assert.ok(match);
       })
-      it("should show a test event with title = Mystery Lunch 1, date = 01.11.2018 and particapant = Sebastian, Janine", () => {
-         let event = {
-            title: 'Mystery Lunch 1',
-            date: new Date(2018-11-01),
-            participants: ['Sebastian', 'Janine'] 
-         };         
-         //msyst.addEvent(event);
+      it("should show a test event with title = Mystery Lunch 1, date = 01.11.2018 and particapant = Sebastian, Janine", () => { 
+         mystl.addEvent(testEvent);
 
          output = test_stdout.inspectSync( () => {
-            test_stdin.send('C:');
+            test_stdin.send('S');
          });
-
+         
          match = /Mystery Lunch 1/.test(output);
          assert.ok(match);
 
          match = /2018-11-01/.test(output);
-         assert.ok(match);
+         assert.ok(match)
 
-         match = /Sebastian, Janine/.test(output);
+         match = /Sebastian,Janine/.test(output);
          assert.ok(match);
-
       })
    })
 })

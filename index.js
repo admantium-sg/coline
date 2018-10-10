@@ -3,6 +3,8 @@ const fs = require('fs');
 
 class MysteryLunch {
    constructor() {
+      this.events = [];
+
       this.stdout = process.stdout;
       this.stdin = process.stdin;
       this.stdin.setEncoding('utf-8');
@@ -29,8 +31,11 @@ class MysteryLunch {
          if(data === 'manage events') {
             this.write_line(data);
             this.write_result("Welcome to managing events. What do you want to do?");
-            this.write_result("-- (C) Create new event");
-            this.write_result("-- (S) Show all events");
+            this.write_result("- (C) Create new event");
+            this.write_result("- (S) Show all events");
+         }
+         else if(data === 'S') {
+            this.listEvents();
          }
          else if (data !== 'exit'){
             this.write_line(data);
@@ -38,6 +43,18 @@ class MysteryLunch {
             this.write_prompt();
          }          
       });
+   }
+
+   addEvent(event = Object) {
+      this.events.push(event);
+   }
+
+   listEvents() {
+      for(let event of this.events) {
+         this.write_result("-- " +event.title);
+         this.write_result("--- " + (event.date).toISOString());
+         this.write_result("--- " +event.participants);
+      }   
    }
 
    log(output) {
@@ -65,4 +82,4 @@ class MysteryLunch {
    }
 }
 
-module.exports = MysteryLunch;
+module.exports = {MysteryLunch};
