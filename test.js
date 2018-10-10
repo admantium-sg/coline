@@ -88,5 +88,14 @@ describe("MysteryLunch", () => {
          match = /Sebastian,Janine/.test(output);
          assert.ok(match);
       })
+      it("should create a new event by asking me a set of questions", () => {
+         output = test_stdout.inspectSync( () => {
+            test_stdin.send('C');
+            test_stdin.send('My First Mystery Lunch');
+            test_stdin.send('2018-11-05');
+            test_stdin.send('Sebastian, Janine');
+         });
+         console.log(output);
+      })
    })
 })
