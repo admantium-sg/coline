@@ -1,11 +1,15 @@
 #!/usr/local/bin/node
 const fs = require('fs');
+const EventEmitter = require('events');
+
+class Handler extends EventEmitter {}
 
 class MysteryLunch {
    constructor() {
       this.stdout = process.stdout;
       this.stdin = process.stdin;
       this.stdin.setEncoding('utf-8');
+      this.handler = new Handler();
 
       this.prompt = "$: ";
       this.rprompt = "$> ";
@@ -15,22 +19,31 @@ class MysteryLunch {
       fs.unlink('./mystl.log', (err) => {
          if(err) throw err;
       });
+      this.setup_commands();
    }
    
    start() {
       this.write_line('Mystery Lunch Planner'); 
       this.write_prompt();
 
-      this.stdin.resume();
+      this.stdin.on('readable',  () => {
+         this.stdin.pause();
+         let cmd = this.stdin.read().toString().trim();
+         let response = this.handler.emit(cmd);    
+         if (typeof(response) !== 'undefined') {
+            this.handler.emit('default', cmd);
+         };
+         this.stdin.resume();
+      });
+   }
 
-      this.stdin.on('data', (data) => {
-         data = data.toString().trim();
-
-         if(data !== 'exit') {
-            this.write_line(data);
-            this.write_result("'" + data + "'");
-            this.write_prompt();
-         }
+   setup_commands() {
+      this.handler.on('default', (data) => {
+         this.write_result("'" + data + "'");
+         this.write_prompt();
+      });
+      this.handler.on('exit', () => {
+         this.stdin.destroy();
       });
    }
 
@@ -58,5 +71,7 @@ class MysteryLunch {
       this.log(output);
    }
 }
+
+
 
 module.exports = MysteryLunch;
