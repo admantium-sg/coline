@@ -1,4 +1,5 @@
 #!/usr/local/bin/mocha
+// Prepare merge with branch A_event_emitter_redesign
 var assert = require('assert');
 
 var test_stdout = require('test-console').stdout;
