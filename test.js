@@ -26,7 +26,7 @@ describe("MysteryLunch", () => {
          var output = test_stdout.inspectSync( () => {
             test_stdin.send('Hello!');
          });
-         //console.log(output);
+         console.log(output);
          match = /\$>\ \'Hello!\'/.test(output);
          assert.ok(match);
       });  

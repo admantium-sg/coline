@@ -5,7 +5,7 @@ const EventEmitter = require('events');
 class Handler extends EventEmitter {}
 
 class MysteryLunch {
-   constructor() {
+   constructor(output_stream) {
       this.stdout = process.stdout;
       this.stdin = process.stdin;
       this.stdin.setEncoding('utf-8');
@@ -26,18 +26,27 @@ class MysteryLunch {
       this.write_line('Mystery Lunch Planner'); 
       this.write_prompt();
 
-      this.stdin.on('readable',  () => {
+      this.stdin.on('data',  (raw_data) => {
          this.stdin.pause();
-         let cmd = this.stdin.read().toString().trim();
-         let response = this.handler.emit(cmd);    
-         if (typeof(response) !== 'undefined') {
-            this.handler.emit('default', cmd);
-         };
+         this.handle_command(raw_data)
          this.stdin.resume();
       });
    }
 
+   handle_command(raw_data) {
+      let cmd  = raw_data.toString().trim();
+      this.log(cmd + this.nl);
+   
+      if (! this.handler.emit(cmd)) {
+         this.handler.emit('default', cmd);
+      };
+   }
+
    setup_commands() {
+      this.handler.on('test', (data) => {
+         this.write_result("'" + data + "'");
+         this.write_prompt();
+      });
       this.handler.on('default', (data) => {
          this.write_result("'" + data + "'");
          this.write_prompt();
@@ -71,7 +80,5 @@ class MysteryLunch {
       this.log(output);
    }
 }
-
-
 
 module.exports = MysteryLunch;
