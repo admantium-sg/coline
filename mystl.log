@@ -1,4 +1,20 @@
 Mystery Lunch Planner
 $: Hello!
 $> 'Hello!'
+$: M
+$> Welcome to managing events. What do you want to do?
+$> - (C) Create new event
+$> - (S) Show all events
+$: S
+$> -- Mystery Lunch 1
+$> --- 2018-11-01T00:00:00.000Z
+$> --- Sebastian,Janine
+$: C
+$> 'C'
+$: My First Mystery Lunch
+$> 'My First Mystery Lunch'
+$: 2018-11-05
+$> '2018-11-05'
+$: Sebastian, Janine
+$> 'Sebastian, Janine'
 $: 

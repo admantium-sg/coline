@@ -1,5 +1,8 @@
 #!/usr/local/bin/node
 const fs = require('fs');
+const EventEmitter = require('events');
+
+class Handler extends EventEmitter {}
 
 class MysteryLunch {
    constructor() {
@@ -8,6 +11,7 @@ class MysteryLunch {
       this.stdout = process.stdout;
       this.stdin = process.stdin;
       this.stdin.setEncoding('utf-8');
+      this.handler = new Handler();
 
       this.prompt = "$: ";
       this.rprompt = "$> ";
@@ -17,31 +21,48 @@ class MysteryLunch {
       fs.unlink('./mystl.log', (err) => {
          if(err) throw err;
       });
+      this.setup_commands();
    }
    
    start() {
       this.write_line('Mystery Lunch Planner'); 
       this.write_prompt();
 
-      this.stdin.resume();
+      this.stdin.on('data',  (raw_data) => {
+         this.stdin.pause();
+         this.handle_command(raw_data)
+         this.stdin.resume();
+      });
+   }
 
-      this.stdin.on('data', (data) => {
-         data = data.toString().trim();
-
-         if(data === 'manage events') {
-            this.write_line(data);
-            this.write_result("Welcome to managing events. What do you want to do?");
-            this.write_result("- (C) Create new event");
-            this.write_result("- (S) Show all events");
-         }
-         else if(data === 'S') {
-            this.listEvents();
-         }
-         else if (data !== 'exit'){
-            this.write_line(data);
-            this.write_result("'" + data + "'");
-            this.write_prompt();
-         }          
+   handle_command(raw_data) {
+      let cmd  = raw_data.toString().trim();
+      this.log(cmd + this.nl);
+   
+      if (! this.handler.emit(cmd)) {
+         this.handler.emit('default', cmd);
+      };
+      this.write_prompt();
+   }
+          
+   setup_commands() {
+      this.handler.on('test', (data) => {
+         this.write_result("'" + data + "'");
+         
+      });
+      this.handler.on('default', (data) => {
+         this.write_result("'" + data + "'");
+      });
+      this.handler.on('M', (data) => {
+         this.write_result("Welcome to managing events. What do you want to do?");
+         this.write_result("- (C) Create new event");
+         this.write_result("- (S) Show all events");
+      })
+      this.handler.on('S', (data) => {
+         this.listEvents();
+      });
+      this.handler.on('exit', () => {
+         this.stdin.destroy();
       });
    }
 

@@ -34,7 +34,7 @@ describe("MysteryLunch", () => {
          output = test_stdout.inspectSync( () => {
             test_stdin.send('Hello!');
          });
-         //console.log(output);
+         console.log(output);
          match = /\$>\ \'Hello!\'/.test(output);
          assert.ok(match);
       });  
@@ -60,7 +60,7 @@ describe("MysteryLunch", () => {
       var output = "foo"
       it("should start the creation of an event when I type 'manage events'", () => {
          output = test_stdout.inspectSync( () => {
-            test_stdin.send('manage events');
+            test_stdin.send('M');
          });
          //console.log(output);
          match = /\$> Welcome to managing events\. What do you want to do\?/.test(output);
