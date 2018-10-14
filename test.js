@@ -5,7 +5,8 @@ var assert = require('assert');
 var test_stdout = require('test-console').stdout;
 var test_stdin = require('mock-stdin').stdin();
 var fs = require('fs');
-const MysteryLunch = require('./index').MysteryLunch;
+const MysteryLunch = require('./index.js').MysteryLunch;
+const LunchEvent = require('./index.js').LunchEvent;
 var mystl = new MysteryLunch();
 
 var testEvent = {
@@ -13,6 +14,26 @@ var testEvent = {
    date: new Date('2018-11-01'),
    participants: ['Sebastian', 'Janine'] 
 }; 
+
+describe("Class LunchEvent", () => {
+   var test_event = new LunchEvent();
+   it("Should have three questions", () => {
+
+   })
+   it("Should be incomplete when I only answer two questions", () => {
+
+   })
+   it("Should then show the correct third question 'When is the event going to happen?'", () => {
+
+   })
+   it("Should be complete after answerting three questions", () => {
+
+   })
+   it("Should throw an error when I want to add a fourth answer", () => {
+
+   })
+})
+
 
 describe("MysteryLunch", () => {
    describe("Startup and echoing 'Hello'", () => {
