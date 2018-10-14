@@ -21,6 +21,12 @@ class LunchEvent {
       this.isComplete = () => {
          return this.answers.length === 3;
       }
+
+      this.printData = () => {
+         return [this.answers[0],
+            this.answers[1],
+            this.answers[2]];
+      }
    }
 
    static getInterfaceMenu() { 
@@ -40,7 +46,7 @@ class LunchEventError extends Error {};
 
 class MysteryLunch {
    constructor() {
-      this.events = [];
+      this.lunch_events = [];
 
       this.stdout = process.stdout;
       this.stdin = process.stdin;
@@ -94,7 +100,10 @@ class MysteryLunch {
          LunchEvent.getInterfaceMenu().forEach(item => this.write_result(item));
       })
       this.handler.on('S', () => {
-         this.listEvents();
+         for(let event of this.lunch_events) {
+            console.log(event);
+            event.printData().foreach(item => this.write_line("--- " + item));
+         }  
       });
       this.handler.on('C', () => {
 
@@ -104,16 +113,8 @@ class MysteryLunch {
       });
    }
 
-   addEvent(event = Object) {
-      this.events.push(event);
-   }
-
-   listEvents() {
-      for(let event of this.events) {
-         this.write_result("-- " +event.title);
-         this.write_result("--- " + (event.date).toISOString());
-         this.write_result("--- " +event.participants);
-      }   
+   addEvent(lunch_event = Object) {
+      this.lunch_events.push(lunch_event);
    }
 
    log(output) {
