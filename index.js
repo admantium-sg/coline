@@ -4,6 +4,32 @@ const EventEmitter = require('events');
 
 class Handler extends EventEmitter {}
 
+class LunchEvent {
+   constructor() {
+      this.questions = 
+         ["-> What is the Name of the event?",
+         "What is the Name of the event?",
+         "When is the event going to happen?"]
+      this.answers = [];
+   }
+   
+   nextQuestion() {
+      if(this.answers.length === 3) return false;
+      return this.questions[this.answers.length];
+   }
+
+   answerQuestion(data) {
+      if (this.answers.length === 3) throw new LunchEventError('All questions are already answered');
+      this.answers.push(data);
+   }
+
+   isComplete() {
+      return this.answers.length === 3;
+   }
+}
+
+class LunchEventError extends Error {};
+
 class MysteryLunch {
    constructor() {
       this.events = [];
@@ -22,6 +48,9 @@ class MysteryLunch {
          if(err) throw err;
       });
       this.setup_commands();
+
+      this.event_creation = false;
+      this.question_counter = 0;
    }
    
    start() {
@@ -38,6 +67,10 @@ class MysteryLunch {
    handle_command(raw_data) {
       let cmd  = raw_data.toString().trim();
       this.log(cmd + this.nl);
+
+      if(this.event_creation) {
+         this.handler.emit('event_creation', cmd);
+      }
    
       if (! this.handler.emit(cmd)) {
          this.handler.emit('default', cmd);
@@ -46,21 +79,20 @@ class MysteryLunch {
    }
           
    setup_commands() {
-      this.handler.on('test', (data) => {
-         this.write_result("'" + data + "'");
-         
+      this.handler.on('default', (cmd) => {
+         this.write_result("'" + cmd + "'");
       });
-      this.handler.on('default', (data) => {
-         this.write_result("'" + data + "'");
-      });
-      this.handler.on('M', (data) => {
+      this.handler.on('M', () => {
          this.write_result("Welcome to managing events. What do you want to do?");
          this.write_result("- (C) Create new event");
          this.write_result("- (S) Show all events");
       })
-      this.handler.on('S', (data) => {
+      this.handler.on('S', () => {
          this.listEvents();
       });
+      this.handler.on('C', () => {
+
+      })
       this.handler.on('exit', () => {
          this.stdin.destroy();
       });
@@ -103,4 +135,4 @@ class MysteryLunch {
    }
 }
 
-module.exports = {MysteryLunch};
+module.exports = {MysteryLunch, LunchEvent, LunchEventError};
