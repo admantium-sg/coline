@@ -6,25 +6,33 @@ class Handler extends EventEmitter {}
 
 class LunchEvent {
    constructor() {
-      this.questions = 
-         ["-> What is the Name of the event?",
-         "What is the Name of the event?",
-         "When is the event going to happen?"]
       this.answers = [];
-   }
    
-   nextQuestion() {
-      if(this.answers.length === 3) return false;
-      return this.questions[this.answers.length];
+      this.nextQuestion = () => {
+         if(this.answers.length === 3) return false;
+         return this.constructor.getCreationQuestions()[this.answers.length];
+      }
+
+      this.answerQuestion = (data) => {
+         if (this.answers.length === 3) throw new LunchEventError('All questions are already answered');
+         this.answers.push(data);
+      }
+
+      this.isComplete = () => {
+         return this.answers.length === 3;
+      }
    }
 
-   answerQuestion(data) {
-      if (this.answers.length === 3) throw new LunchEventError('All questions are already answered');
-      this.answers.push(data);
+   static getInterfaceMenu() { 
+      return ["Welcome to managing events. What do you want to do?",
+         "- (C) Create new event",
+         "- (S) Show all events"];
    }
 
-   isComplete() {
-      return this.answers.length === 3;
+   static getCreationQuestions() {
+      return ["-> What is the Name of the event?",
+         "What is the Name of the event?",
+         "When is the event going to happen?"];
    }
 }
 
@@ -83,9 +91,7 @@ class MysteryLunch {
          this.write_result("'" + cmd + "'");
       });
       this.handler.on('M', () => {
-         this.write_result("Welcome to managing events. What do you want to do?");
-         this.write_result("- (C) Create new event");
-         this.write_result("- (S) Show all events");
+         LunchEvent.getInterfaceMenu().forEach(item => this.write_result(item));
       })
       this.handler.on('S', () => {
          this.listEvents();

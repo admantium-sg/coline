@@ -20,12 +20,11 @@ var testEvent = {
 describe("Class LunchEvent", () => {
    var test_event = new LunchEvent();
    it("Should have three questions", () => {
-      test_event.questions.should.have.lengthOf(3);
+      LunchEvent.getCreationQuestions().should.have.lengthOf(3);
    })
    it("Should be incomplete when I only answer two questions", () => {
       test_event.answerQuestion('Mystery Lunch 1');
       test_event.answerQuestion('2018-10-13');
-      //expect(test_event.isComplete()).to.be.false;
       test_event.isComplete().should.be.false;
    })
    it("Should then show the correct third question 'When is the event going to happen?'", () => {
@@ -63,7 +62,6 @@ describe("MysteryLunch", () => {
          output = test_stdout.inspectSync( () => {
             test_stdin.send('Hello!');
          });
-         console.log(output);
          match = /\$>\ \'Hello!\'/.test(output);
          assert.ok(match);
       });  
@@ -125,7 +123,6 @@ describe("MysteryLunch", () => {
             test_stdin.send('2018-11-05');
             test_stdin.send('Sebastian, Janine');
          });
-         console.log(output);
       })
    })
 })
