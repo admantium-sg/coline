@@ -22,10 +22,10 @@ describe("Class LunchEvent", () => {
       test_event.answerQuestion('2018-10-13');
       test_event.isComplete().should.be.false;
    })
-   it("Should then show the correct third question 'When is the event going to happen?'", () => {
-      test_event.nextQuestion().should.be.equal('When is the event going to happen?');
+   it("Should then show the correct third question 'Who is participating?'", () => {
+      test_event.nextQuestion().should.be.equal('Who is participating?');
    })
-   it("Should be complete after answerting three questions", () => {
+   it("Should be complete after answering three questions", () => {
       test_event.answerQuestion('Sebastian, Janine');
       test_event.isComplete().should.be.true;
    })
@@ -62,23 +62,6 @@ describe("MysteryLunch", () => {
          match = /\$>\ \'Hello!\'/.test(output);
          assert.ok(match);
       });  
-      it("should log all commands in the logfile", () => {
-         var logfile_content = fs.readFileSync('./mystl.log', 'utf-8');
-         
-         //Expect Mystery Lunch PLanner at the beginning
-         match = /^Mystery Lunch Planner\s/.test(logfile_content);
-         assert.ok(match);
-
-         match = /\$: Hello!/.test(logfile_content);
-         assert.ok(match);
-
-         match = /\$> 'Hello!'/.test(logfile_content);
-         assert.ok(match);
-
-         //Expect Prompt and space at the end of the file
-         match = /\$:\s$/.test(logfile_content);
-         assert.ok(match);
-      })
    })
    describe("Managaging events", () => {
       var output = "foo"
@@ -99,10 +82,30 @@ describe("MysteryLunch", () => {
       it("should create a new event by asking me a set of questions", () => {
          output = test_stdout.inspectSync( () => {
             test_stdin.send('C');
+         });
+         match = /What is the name of the event\?/.test(output);
+         assert.ok(match);
+         
+         output = test_stdout.inspectSync( () => {
             test_stdin.send('My First Mystery Lunch');
             test_stdin.send('2018-11-05');
-            test_stdin.send('Sebastian, Janine');
          });
+         match = /Who is participating\?/.test(output);
+         assert.ok(match);
       })
+      it("should print the 'Thank You' message when I finished the object creation", () => {
+          output = test_stdout.inspectSync( () => {
+            test_stdin.send('Sebastian, Janine');
+          })
+          match = /Thank you! The event is registered\./.test(output);
+          assert.ok(match);
+      })
+      it("should have an object representing the event", () => {
+         let event = mystl.lunch_events[0];
+         event.title.should.be.equal('My First Mystery Lunch');
+         event.date.should.be.equal('2018-11-05');
+         event.participants.should.be.equal('Sebastian, Janine');
+
+      });
    })
 })

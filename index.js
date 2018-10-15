@@ -7,6 +7,9 @@ class Handler extends EventEmitter {}
 class LunchEvent {
    constructor() {
       this.answers = [];
+      this.title = '';
+      this.date = '';
+      this.participants = '';
    
       this.nextQuestion = () => {
          if(this.answers.length === 3) return false;
@@ -27,6 +30,12 @@ class LunchEvent {
             this.answers[1],
             this.answers[2]];
       }
+
+      this.getSuccessMessage = () => {
+         [this.title, this.date, this.participants] = this.answers;
+            return "Thank you! The event is registered.";
+           
+      }
    }
 
    static getInterfaceMenu() { 
@@ -38,7 +47,7 @@ class LunchEvent {
    static getCreationQuestions() {
       return ["What is the name of the event?",
          "When is the event going to happen?",
-         "When is the event going to happen?"];
+         "Who is participating?"];
    }
 }
 
@@ -82,11 +91,15 @@ class MysteryLunch {
       let cmd  = raw_data.toString().trim();
       this.log(cmd + this.nl);
 
+      // If context objectt exists, emit event creation with cmd as input
+      // ELSE send cmd as Event code 
+      // FINALLY default to echo
       if(this.contextObject) {
          this.handler.emit('event_creation', cmd);
       } else if (! this.handler.emit(cmd, cmd)) {
          this.handler.emit('default', cmd);
       };
+      this.write_prompt();
    }
           
    setup_commands() {
@@ -107,19 +120,17 @@ class MysteryLunch {
          //Print first message of context object
          this.write_question(this.contextObject.nextQuestion());
       })
-      this.handler.on('event_creation', (cmd) => {
-         // Provide 'cmd' as answer to first question
-         console.log("BEFORE " + this.contextObject.nextQuestion());
-         this.contextObject.answerQuestion(cmd);
-         
+      this.handler.on('event_creation', (cmd) => {    
+          this.contextObject.answerQuestion(cmd);     
          // IF incomplete print out next question
          // ELSE Add created object and reset context object 
          if(!this.contextObject.isComplete()) {
             this.write_question(this.contextObject.nextQuestion());
-         } else {
+         } 
+         else {
             this.addEvent(this.contextObject);
+            this.write_line(this.contextObject.getSuccessMessage());
             this.contextObject = null;
-            this.write_prompt;
          }
       })
       this.handler.on('exit', () => {
@@ -144,7 +155,7 @@ class MysteryLunch {
    }
 
    write_question(question) {
-      let output = question + this.nl + this.prompt;
+      let output = this.rprompt + question + this.nl;
       this.stdout.write(output);
       this.log(output);
    }
