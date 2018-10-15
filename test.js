@@ -15,6 +15,7 @@ describe("Class LunchEvent", () => {
    var test_event = new LunchEvent();
    it("Should have three questions", () => {
       LunchEvent.getCreationQuestions().should.have.lengthOf(3);
+      test_event.nextQuestion().should.be.equal('What is the name of the event?')
    })
    it("Should be incomplete when I only answer two questions", () => {
       test_event.answerQuestion('Mystery Lunch 1');
@@ -22,7 +23,6 @@ describe("Class LunchEvent", () => {
       test_event.isComplete().should.be.false;
    })
    it("Should then show the correct third question 'When is the event going to happen?'", () => {
-      nextQuestion = test_event.nextQuestion;
       test_event.nextQuestion().should.be.equal('When is the event going to happen?');
    })
    it("Should be complete after answerting three questions", () => {
@@ -65,7 +65,7 @@ describe("MysteryLunch", () => {
       it("should log all commands in the logfile", () => {
          var logfile_content = fs.readFileSync('./mystl.log', 'utf-8');
          
-         //Expect Myster Lunch PLanner at the beginning
+         //Expect Mystery Lunch PLanner at the beginning
          match = /^Mystery Lunch Planner\s/.test(logfile_content);
          assert.ok(match);
 
@@ -86,7 +86,6 @@ describe("MysteryLunch", () => {
          output = test_stdout.inspectSync( () => {
             test_stdin.send('M');
          });
-         //console.log(output);
          match = /\$> Welcome to managing events\. What do you want to do\?/.test(output);
          assert.ok(match);
       })
@@ -96,22 +95,6 @@ describe("MysteryLunch", () => {
 
          match = /Show all events/.test(output);
          assert.ok(match);
-      })
-      it("should show a test event with title = Mystery Lunch 1, date = 01.11.2018 and particapant = Sebastian, Janine", () => { 
-         // mystl.addEvent(testEvent);
-
-         // output = test_stdout.inspectSync( () => {
-         //    test_stdin.send('S');
-         // });
-         
-         // match = /Mystery Lunch 1/.test(output);
-         // assert.ok(match);
-
-         // match = /2018-11-01/.test(output);
-         // assert.ok(match)
-
-         // match = /Sebastian,Janine/.test(output);
-         // assert.ok(match);
       })
       it("should create a new event by asking me a set of questions", () => {
          output = test_stdout.inspectSync( () => {
