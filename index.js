@@ -36,8 +36,8 @@ class LunchEvent {
    }
 
    static getCreationQuestions() {
-      return ["-> What is the Name of the event?",
-         "What is the Name of the event?",
+      return ["What is the name of the event?",
+         "When is the event going to happen?",
          "When is the event going to happen?"];
    }
 }
@@ -63,7 +63,7 @@ class MysteryLunch {
       });
       this.setup_commands();
 
-      this.event_creation = false;
+      this.contextObject = null;
       this.question_counter = 0;
    }
    
@@ -82,14 +82,11 @@ class MysteryLunch {
       let cmd  = raw_data.toString().trim();
       this.log(cmd + this.nl);
 
-      if(this.event_creation) {
+      if(this.contextObject) {
          this.handler.emit('event_creation', cmd);
-      }
-   
-      if (! this.handler.emit(cmd)) {
+      } else if (! this.handler.emit(cmd, cmd)) {
          this.handler.emit('default', cmd);
       };
-      this.write_prompt();
    }
           
    setup_commands() {
@@ -101,12 +98,29 @@ class MysteryLunch {
       })
       this.handler.on('S', () => {
          for(let event of this.lunch_events) {
-            console.log(event);
             event.printData().foreach(item => this.write_line("--- " + item));
          }  
       });
       this.handler.on('C', () => {
-
+         //Bind new lunch event to context object
+         this.contextObject = new LunchEvent();
+         //Print first message of context object
+         this.write_question(this.contextObject.nextQuestion());
+      })
+      this.handler.on('event_creation', (cmd) => {
+         // Provide 'cmd' as answer to first question
+         console.log("BEFORE " + this.contextObject.nextQuestion());
+         this.contextObject.answerQuestion(cmd);
+         
+         // IF incomplete print out next question
+         // ELSE Add created object and reset context object 
+         if(!this.contextObject.isComplete()) {
+            this.write_question(this.contextObject.nextQuestion());
+         } else {
+            this.addEvent(this.contextObject);
+            this.contextObject = null;
+            this.write_prompt;
+         }
       })
       this.handler.on('exit', () => {
          this.stdin.destroy();
@@ -125,6 +139,12 @@ class MysteryLunch {
 
    write_line(cmd) {
       let output = cmd + this.nl;
+      this.stdout.write(output);
+      this.log(output);
+   }
+
+   write_question(question) {
+      let output = question + this.nl + this.prompt;
       this.stdout.write(output);
       this.log(output);
    }
