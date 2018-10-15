@@ -1,4 +1,5 @@
 #!/usr/local/bin/node
+// Prepare merge with branch '04_manage_events'
 const fs = require('fs');
 
 class MysteryLunch {
