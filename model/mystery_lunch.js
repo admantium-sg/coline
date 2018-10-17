@@ -1,56 +1,11 @@
 #!/usr/local/bin/node
+const LunchEvent = require('./lunch_event').LunchEvent
+const LunchEventError = require('./lunch_event').LunchEventError
+
 const fs = require('fs')
 const EventEmitter = require('events')
 
 class Handler extends EventEmitter {}
-
-class LunchEvent {
-  constructor () {
-    this.answers = []
-    this.title = ''
-    this.date = ''
-    this.participants = ''
-
-    this.nextQuestion = () => {
-      if (this.answers.length === 3) return false
-      return this.constructor.getCreationQuestions()[this.answers.length]
-    }
-
-    this.answerQuestion = (data) => {
-      if (this.answers.length === 3) throw new LunchEventError('All questions are already answered')
-      this.answers.push(data)
-    }
-
-    this.isComplete = () => {
-      return this.answers.length === 3
-    }
-
-    this.printData = () => {
-      return [this.answers[0],
-        this.answers[1],
-        this.answers[2]]
-    }
-
-    this.getSuccessMessage = () => {
-      [this.title, this.date, this.participants] = this.answers
-      return 'Thank you! The event is registered.'
-    }
-  }
-
-  static getInterfaceMenu () {
-    return ['Welcome to managing events. What do you want to do?',
-      '- (C) Create new event',
-      '- (S) Show all events']
-  }
-
-  static getCreationQuestions () {
-    return ['What is the name of the event?',
-      'When is the event going to happen?',
-      'Who is participating?']
-  }
-}
-
-class LunchEventError extends Error {};
 
 class MysteryLunch {
   constructor () {
@@ -110,7 +65,7 @@ class MysteryLunch {
     })
     this.handler.on('S', () => {
       for (let event of this.lunch_events) {
-        event.printData().foreach(item => this.writeLine('--- ' + item))
+        event.printData().forEach(item => this.writeLine('--- ' + item))
       }
     })
     this.handler.on('C', () => {
