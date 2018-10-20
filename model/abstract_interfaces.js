@@ -1,21 +1,28 @@
-class AbstractCommandLineInterface {
+class AbstractCommandLineProcessor {
     constructor() {
         this.inputStream
         this.outputStream
+        this.logStream
         this.commandHandler
-        this.prompt
-        this.contextObject
     }
     setup() {}
-    start()  {}
+    start() {}
+    process() {}
     stop() {}
     write(type, text) {}
+
+    registerInterfaceObject(object) {}
+}
+
+class AbstractInterfaceObject {
+    getInterface() {}
+    registerCommands(commandHandler, writeCallback) {}
 }
 
 class AbstractContextObject {
     constructor() {
         this.contextObject
-        this.commandRegistry
+        this.commandHandler
     }
 
     getInterface () {}
@@ -23,7 +30,8 @@ class AbstractContextObject {
     answerQuestion () {}
     finalize () { return "Success message" }
     isComplete () {}
-    ejectCommands () {}
+    
+    registerCommands (type, text) {}
 }
 
 class AbstractCommand {
@@ -33,5 +41,9 @@ class AbstractCommand {
     }
 }
 
-module.exports = { AbstractCommandLineInterface, AbstractContextObject, AbstractCommand}
+module.exports = {
+    AbstractCommandLineProcessor,
+    AbstractInterfaceObject, 
+    AbstractContextObject, 
+    AbstractCommand}
 
