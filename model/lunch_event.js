@@ -28,7 +28,7 @@ class LunchEvent extends AbstractContextObject {
         this.answers[2]]
     }
 
-    this.getSuccessMessage = () => {
+    this.finalize = () => {
       [this.title, this.date, this.participants] = this.answers
       return 'Thank you! The event is registered.'
     }

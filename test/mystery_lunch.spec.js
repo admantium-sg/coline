@@ -8,17 +8,20 @@ var test_stdout = require('test-console').stdout
 var test_stdin = require('mock-stdin').stdin()
 var fs = require('fs')
 
+const CommandLineInterface = require('./../model/index.js').CommandLineInterface
 const MysteryLunch = require('./../model/index.js').MysteryLunch
 
-var mystl = new MysteryLunch()
+let cli = new CommandLineInterface()
+cli.registerInterfaceObject(new MysteryLunch())
+cli.setup()
 
-describe('MysteryLunch', () => {
+describe('CommandLineInterface', () => {
   describe("Startup and echoing 'Hello'", () => {
     var output = ''
 
     it("should print 'Mystery Lunch Planner' when started", () => {
       output = test_stdout.inspectSync(() => {
-        mystl.start()
+        cli.start()
       })
       match = /Mystery Lunch Planner/.test(output)
       assert.ok(match)
@@ -40,7 +43,7 @@ describe('MysteryLunch', () => {
     var output = 'foo'
     it("should start the creation of an event when I type 'manage events'", () => {
       output = test_stdout.inspectSync(() => {
-        test_stdin.send('M')
+        test_stdin.send('I')
       })
       match = /\$> Welcome to managing events\. What do you want to do\?/.test(output)
       assert.ok(match)
@@ -73,11 +76,19 @@ describe('MysteryLunch', () => {
       match = /Thank you! The event is registered\./.test(output)
       assert.ok(match)
     })
-    it('should have an object representing the event', () => {
-      let event = mystl.lunch_events[0]
-      event.title.should.be.equal('My First Mystery Lunch')
-      event.date.should.be.equal('2018-11-05')
-      event.participants.should.be.equal('Sebastian, Janine')
+    it('should print the event with the data I just entered', () => {
+      output = test_stdout.inspectSync(() => {
+        test_stdin.send('R')
+      })
+
+      match = /My First Mystery Lunch/.test(output)
+      assert.ok(match)
+
+      match = /2018-11-05/.test(output)
+      assert.ok(match)
+
+      match = /Sebastian, Janine/.test(output)
+      assert.ok(match)
     })
   })
 })

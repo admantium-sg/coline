@@ -42,7 +42,7 @@ class MysteryLunch extends AbstractInterfaceObject {
       if (!cob.isComplete()) {
         writeCallback('question', cob.nextQuestion())
       } else {
-        console.log("Adding COB to events " + cob)
+        //console.log("Adding COB to events " + cob)
         this.lunchEvents.push(cob)
         writeCallback('result', cob.finalize())
         commandHandler.resetContextObject()
