@@ -1,5 +1,3 @@
 #!/usr/bin/node
-const MysteryLunch = require('./src/index.js').MysteryLunch
-const mysteryLunch = new MysteryLunch()
-
-mysteryLunch.start()
+const CommandLineInterface = require('./model/index.js').CommandLineInterface
+new CommandLineInterface().start()
