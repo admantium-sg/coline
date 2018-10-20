@@ -3,7 +3,14 @@ const EventEmitter = require('events')
 
 const AbstractCommandLineProcessor = require('./abstract_interfaces').AbstractCommandLineProcessor
 
-class Handler extends EventEmitter { }
+class Handler extends EventEmitter { 
+  constructor() {
+    super()
+    this.contextObject = null
+    this.setContextObject = (object) => { this.contextObject = object }
+    this.resetContextObject = () => { this.contextObject = null }
+  }
+}
 
 class CommandLineInterface extends AbstractCommandLineProcessor {
   // Provides bindings for all variables from the abstract class
@@ -49,7 +56,10 @@ class CommandLineInterface extends AbstractCommandLineProcessor {
       this.write('log_only', cmd)
 
       //emit cmd, if not handled then echo 
-      if (!this.commandHandler.emit(cmd, cmd)) {
+      if (this.commandHandler.contextObject !== null) {
+        this.commandHandler.emit("context", cmd)
+      }
+      else if (!this.commandHandler.emit(cmd, cmd)) {
         this.commandHandler.emit('echo', cmd)
       }
       this.write('prompt')
@@ -73,9 +83,11 @@ class CommandLineInterface extends AbstractCommandLineProcessor {
       else if (type === 'result') { output = rprompt + text + nl }
 
       //console.log("+++ Logging ''" + output + "'")
-      if (!(type === 'log_only')) {
-          this.outputStream.write(output)
-          this.logStream.write(output)
+      if (type === 'log_only') {
+        this.logStream.write(output)
+      } else {
+        this.outputStream.write(output)
+        this.logStream.write(output)
       }
     }
 

@@ -2,6 +2,7 @@ const AbstractContextObject =  require('./abstract_interfaces').AbstractContextO
 
 class LunchEvent extends AbstractContextObject {
   constructor () {
+    super()
     this.answers = []
     this.title = ''
     this.date = ''

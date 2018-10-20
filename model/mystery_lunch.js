@@ -1,5 +1,5 @@
 const AbstractInterfaceObject = require('./abstract_interfaces').AbstractInterfaceObject
-
+const LunchEvent = require('./lunch_event').LunchEvent
 class MysteryLunch extends AbstractInterfaceObject {
   constructor() {
     super()
@@ -14,6 +14,10 @@ class MysteryLunch extends AbstractInterfaceObject {
       '- (D) Delete an event']
   }
 
+  addEvent(cob) {
+
+  }
+
   registerCommands(commandHandler, writeCallback) {
     commandHandler.on('I', () => {
       console.log('Called (I)nterface for MysteryLunch')
@@ -21,33 +25,30 @@ class MysteryLunch extends AbstractInterfaceObject {
     })
     commandHandler.on('C', () => {
       // Bind new lunch event to context object
-      this.contextObject = new LunchEvent()
+      commandHandler.setContextObject(new LunchEvent());
       // Print first message of context object
-      writeCallback('question', this.contextObject.nextQuestion())
+      writeCallback('question', commandHandler.contextObject.nextQuestion())
     })
     commandHandler.on('R', () => {
-      for (let event of this.lunch_events) {
+      for (let event of this.lunchEvents) {
         event.printData().forEach(item => writeCallback('result', '--- ' + item))
       }
     })
-    commandHandler.on('event_creation', (cmd) => {
-      this.contextObject.answerQuestion(cmd)
+    commandHandler.on('context', (cmd) => {
+      let cob = commandHandler.contextObject
+      cob.answerQuestion(cmd)
       // IF incomplete print out next question
       // ELSE Add created object and reset context object
-      if (!this.contextObject.isComplete()) {
-        writeCallback('question', this.contextObject.nextQuestion())
+      if (!cob.isComplete()) {
+        writeCallback('question', cob.nextQuestion())
       } else {
-        this.addEvent(this.contextObject)
-        writeCallback('result', this.contextObject.getSuccessMessage())
-        this.contextObject = null
+        console.log("Adding COB to events " + cob)
+        this.lunchEvents.push(cob)
+        writeCallback('result', cob.finalize())
+        commandHandler.resetContextObject()
       }
     })
   }
-
-    addEvent(lunch_event = Object) {
-      this.lunch_events.push(lunch_event)
-    }
-  }
+}
 
 module.exports = { MysteryLunch }
-
