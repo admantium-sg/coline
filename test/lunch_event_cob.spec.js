@@ -13,7 +13,7 @@ const LunchEventError = require('./../model/index.js').LunchEventError
 
 var mystl = new MysteryLunch()
 
-describe('Class LunchEvent', () => {
+describe('LunchEvent Context Object', () => {
   var test_event = new LunchEvent()
   it('Should have three questions', () => {
     LunchEvent.getCreationQuestions().should.have.lengthOf(3)

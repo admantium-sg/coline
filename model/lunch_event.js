@@ -1,6 +1,8 @@
-#!/usr/local/bin/node
-class LunchEvent {
+const AbstractContextObject = require('./abstract_interfaces').AbstractContextObject
+
+class LunchEvent extends AbstractContextObject {
   constructor () {
+    super()
     this.answers = []
     this.title = ''
     this.date = ''
@@ -26,18 +28,11 @@ class LunchEvent {
         this.answers[2]]
     }
 
-    this.getSuccessMessage = () => {
+    this.finalize = () => {
       [this.title, this.date, this.participants] = this.answers
       return 'Thank you! The event is registered.'
     }
   }
-
-  static getInterfaceMenu () {
-    return ['Welcome to managing events. What do you want to do?',
-      '- (C) Create new event',
-      '- (S) Show all events']
-  }
-
   static getCreationQuestions () {
     return ['What is the name of the event?',
       'When is the event going to happen?',
