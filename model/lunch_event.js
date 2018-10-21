@@ -1,4 +1,4 @@
-const AbstractContextObject =  require('./abstract_interfaces').AbstractContextObject
+const AbstractContextObject = require('./abstract_interfaces').AbstractContextObject
 
 class LunchEvent extends AbstractContextObject {
   constructor () {

@@ -3,8 +3,8 @@ const EventEmitter = require('events')
 
 const AbstractCommandLineProcessor = require('./abstract_interfaces').AbstractCommandLineProcessor
 
-class Handler extends EventEmitter { 
-  constructor() {
+class Handler extends EventEmitter {
+  constructor () {
     super()
     this.contextObject = null
     this.setContextObject = (object) => { this.contextObject = object }
@@ -14,7 +14,7 @@ class Handler extends EventEmitter {
 
 class CommandLineInterface extends AbstractCommandLineProcessor {
   // Provides bindings for all variables from the abstract class
-  constructor() {
+  constructor () {
     super()
     this.inputStream = process.stdin
     this.outputStream = process.stdout
@@ -27,7 +27,7 @@ class CommandLineInterface extends AbstractCommandLineProcessor {
     }
     this.commandHandler = new Handler()
 
-    //registers basic commands, like 'echo' and 'exit'
+    // registers basic commands, like 'echo' and 'exit'
     this.setup = () => {
       this.commandHandler.on('echo', (cmd) => {
         this.write('result', "'" + cmd + "'")
@@ -38,7 +38,7 @@ class CommandLineInterface extends AbstractCommandLineProcessor {
       })
     }
 
-    //Starts the interface with a welcome message, and creates a listener to inputStream
+    // Starts the interface with a welcome message, and creates a listener to inputStream
     this.start = () => {
       this.write('text', new Date().toISOString() + ' Mystery Lunch Planner')
       this.write('prompt')
@@ -50,22 +50,21 @@ class CommandLineInterface extends AbstractCommandLineProcessor {
       })
     }
 
-    //Processes input from inputStream
+    // Processes input from inputStream
     this.process = (rawData) => {
       let cmd = rawData.toString().trim()
       this.write('log_only', cmd)
 
-      //emit cmd, if not handled then echo 
+      // emit cmd, if not handled then echo
       if (this.commandHandler.contextObject !== null) {
-        this.commandHandler.emit("context", cmd)
-      }
-      else if (!this.commandHandler.emit(cmd, cmd)) {
+        this.commandHandler.emit('context', cmd)
+      } else if (!this.commandHandler.emit(cmd, cmd)) {
         this.commandHandler.emit('echo', cmd)
       }
       this.write('prompt')
     }
 
-    //Stops the command line processor
+    // Stops the command line processor
     // Here: Only destroy the listener to inputStream
     this.stop = () => {
       this.inputStream.destroy()
@@ -73,16 +72,10 @@ class CommandLineInterface extends AbstractCommandLineProcessor {
 
     // Writes input to outputStream and logStrean
     this.write = (type, text = '') => {
-      //console.log("+++ WRITE Called with TYPE +" + type + "+ / TEXT +" + text + "+")
-      let prompt = '$: ', rprompt = '$> ', nl = '\r\n', output = ''
+      let prompt = '$: '; let rprompt = '$> '; let nl = '\r\n'; let output = ''
 
-      if (type === 'text') { output = text + nl }
-      else if (type === 'log_only') { output = text + nl }
-      else if (type === 'prompt') { output = prompt }
-      else if (type === 'question') { output = rprompt + text + nl }
-      else if (type === 'result') { output = rprompt + text + nl }
+      if (type === 'text') { output = text + nl } else if (type === 'log_only') { output = text + nl } else if (type === 'prompt') { output = prompt } else if (type === 'question') { output = rprompt + text + nl } else if (type === 'result') { output = rprompt + text + nl }
 
-      //console.log("+++ Logging ''" + output + "'")
       if (type === 'log_only') {
         this.logStream.write(output)
       } else {
@@ -91,7 +84,7 @@ class CommandLineInterface extends AbstractCommandLineProcessor {
       }
     }
 
-    // Registers commands from interface object by 
+    // Registers commands from interface object by
     // sependency injection of commandHandler and writeCallback
     this.registerInterfaceObject = (interfaceObject) => {
       interfaceObject.registerCommands(this.commandHandler, this.write)
