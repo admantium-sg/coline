@@ -1,7 +1,7 @@
 const fs = require('fs')
 const EventEmitter = require('events')
 
-const AbstractCommandLineProcessor = require('./abstract_interfaces').AbstractCommandLineProcessor
+const AbstractCommandLineInterpreter = require('./abstract_interfaces').AbstractCommandLineInterpreter
 
 class Handler extends EventEmitter {
   constructor () {
@@ -12,7 +12,7 @@ class Handler extends EventEmitter {
   }
 }
 
-class CommandLineInterface extends AbstractCommandLineProcessor {
+class CommandLineInterpreter extends AbstractCommandLineInterpreter {
   // Provides bindings for all variables from the abstract class
   constructor () {
     super()
@@ -92,4 +92,4 @@ class CommandLineInterface extends AbstractCommandLineProcessor {
   }
 }
 
-module.exports = { CommandLineInterface }
+module.exports = { CommandLineInterpreter }

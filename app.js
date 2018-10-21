@@ -1,8 +1,8 @@
 #!/usr/bin/node
-const CommandLineInterface = require('./model/index.js').CommandLineInterface
-const MysteryLunch = require('./model/mystery_lunch').MysteryLunch
+const CommandLineInterpreter = require('./model/index').CommandLineInterpreter
+const MysteryLunch = require('./model/index').MysteryLunch
 
-let cli = new CommandLineInterface()
+let cli = new CommandLineInterpreter()
 cli.registerInterfaceObject(new MysteryLunch())
 cli.setup()
 cli.start()

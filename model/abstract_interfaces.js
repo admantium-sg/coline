@@ -1,4 +1,4 @@
-class AbstractCommandLineProcessor {
+class AbstractCommandLineInterpreter {
   constructor () {
     this.inputStream
     this.outputStream
@@ -42,7 +42,7 @@ class AbstractCommand {
 }
 
 module.exports = {
-  AbstractCommandLineProcessor,
+  AbstractCommandLineInterpreter,
   AbstractInterfaceObject,
   AbstractContextObject,
   AbstractCommand }

@@ -3,10 +3,10 @@ var assert = require('chai').assert
 var test_stdout = require('test-console').stdout
 var test_stdin = require('mock-stdin').stdin()
 
-const CommandLineInterface = require('./../model/index.js').CommandLineInterface
+const CommandLineInterpreter = require('./../model/index.js').CommandLineInterpreter
 const MysteryLunch = require('./../model/index.js').MysteryLunch
 
-let cli = new CommandLineInterface()
+let cli = new CommandLineInterpreter()
 cli.registerInterfaceObject(new MysteryLunch())
 cli.setup()
 
