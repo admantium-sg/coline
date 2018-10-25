@@ -1,4 +1,5 @@
 #!/usr/bin/node
+// Prepare merge with branch 'D_generic_context_objects'
 const CommandLineInterpreter = require('./model/index').CommandLineInterpreter
 const MysteryLunch = require('./model/index').MysteryLunch
 
