@@ -24,14 +24,9 @@ class AbstractContextObject {
     this.contextObject
     this.commandHandler
   }
-
-  getInterface () {}
-  nextQuestion () {}
-  answerQuestion () {}
+  next () {}
+  answer () {}
   finalize () { return 'Success message' }
-  isComplete () {}
-
-  registerCommands (type, text) {}
 }
 
 class AbstractCommand {
