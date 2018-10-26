@@ -1,7 +1,7 @@
 const AbstractContextObject = require('./abstract_interfaces').AbstractContextObject
 
 class ContextObject extends AbstractContextObject {
-  constructor(questions, object = { }) {
+  constructor(questions = [], object = { }) {
     super()
     this.questions = questions
     this.answers = []

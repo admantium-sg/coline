@@ -1,45 +1,41 @@
-const AbstractContextObject = require('./abstract_interfaces').AbstractContextObject
+const ContextObject = require('./context_object').ContextObject
 
-class LunchEvent extends AbstractContextObject {
-  constructor () {
-    super()
-    this.answers = []
-    this.title = ''
-    this.date = ''
-    this.participants = ''
+const object = {title: '', date: '', participants: ''}
 
-    this.nextQuestion = () => {
-      if (this.answers.length === 3) return false
-      return this.constructor.getCreationQuestions()[this.answers.length]
+const questions = [
+  {
+    id: 1,
+    question: 'What is the name of the event?',
+    accept: /.*/,
+    callback_accept: (title) => {object.title = title}
+  },
+  {
+    id: 2,
+    question: "When is the event going to happen? (Any sign) / 'Back'",
+    accept: /.*/,
+    return: /Back/,
+    callback_accept: (date) => {object.date = date}
+  }, 
+  {
+    id: 3,
+    question: "Who is partcipating? (Any sign) / 'Back'",
+    accept: /.*/,
+    return: /Back/,
+    callback_accept: (participants) => {object.participants = participants}
+  }, 
+  {
+    id: 4,
+    question: "Do you want to create this event? (Yes / No)",
+    accept: /Yes/,
+    return: /Back/,
+    callback_accept: () => {return object}
+  } 
+]
+
+class LunchEvent extends ContextObject {
+    constructor() {
+      super(questions, object)
     }
-
-    this.answerQuestion = (data) => {
-      if (this.answers.length === 3) throw new LunchEventError('All questions are already answered')
-      this.answers.push(data)
-    }
-
-    this.isComplete = () => {
-      return this.answers.length === 3
-    }
-
-    this.printData = () => {
-      return [this.answers[0],
-        this.answers[1],
-        this.answers[2]]
-    }
-
-    this.finalize = () => {
-      [this.title, this.date, this.participants] = this.answers
-      return 'Thank you! The event is registered.'
-    }
-  }
-  static getCreationQuestions () {
-    return ['What is the name of the event?',
-      'When is the event going to happen?',
-      'Who is participating?']
-  }
 }
 
-class LunchEventError extends Error {}
-
-module.exports = { LunchEvent, LunchEventError }
+module.exports = { LunchEvent }
