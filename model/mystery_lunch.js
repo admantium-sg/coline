@@ -1,5 +1,6 @@
 const AbstractInterfaceObject = require('./abstract_interfaces').AbstractInterfaceObject
 const LunchEvent = require('./lunch_event').LunchEvent
+
 class MysteryLunch extends AbstractInterfaceObject {
   constructor () {
     super()
@@ -26,20 +27,20 @@ class MysteryLunch extends AbstractInterfaceObject {
       // Bind new lunch event to context object
       commandHandler.setContextObject(new LunchEvent())
       // Print first message of context object
-      writeCallback('question', commandHandler.contextObject.nextQuestion())
+      writeCallback('question', commandHandler.contextObject.next().question())
     })
     commandHandler.on('R', () => {
       for (let event of this.lunchEvents) {
-        event.printData().forEach(item => writeCallback('result', '--- ' + item))
+        event.forEach(item => writeCallback('result', '--- ' + item))
       }
     })
     commandHandler.on('context', (cmd) => {
       let cob = commandHandler.contextObject
-      cob.answerQuestion(cmd)
+      cob.answer(cmd)
       // IF incomplete print out next question
       // ELSE Add created object and reset context object
       if (!cob.isComplete()) {
-        writeCallback('question', cob.nextQuestion())
+        writeCallback('question', cob.next().question())
       } else {
         this.lunchEvents.push(cob)
         writeCallback('result', cob.finalize())

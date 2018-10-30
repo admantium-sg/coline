@@ -9,20 +9,23 @@ class ContextObject extends AbstractContextObject {
   }
 
   next() {
-    if (this.isComplete()) return false
-    return this.questions[this.answers.length]
+    if (this.isComplete()) 
+      return false
+    else 
+      return this.questions[this.answers.length] 
   }
-  answer(msg) {
-    if (this.isComplete()) return false
-    let current_question = this.questions[this.answers.length]
 
+  answer(msg) {
+    // Don't accept answer if the object is complete
+    if (this.isComplete()) return false
+
+    let current_question = this.questions[this.answers.length]
+    // Go back one question if the answer matches the 'return' value
     if (current_question.return && current_question.return.test(msg)) {
       this.answers.pop()
+    //Accept answer when it confirms with the 'accept' value  
     } else if (current_question.accept.test(msg)) {
       this.answers.push(msg)
-      if (current_question.callback_accept != null) {
-        return current_question.callback_accept(msg)
-      }
     } else {
       // Do nothing
     }
