@@ -1,12 +1,11 @@
-const AbstractInterfaceObject = require('./abstract_interfaces').AbstractInterfaceObject
+const InterfaceObject = require('./interface_object').InterfaceObject
 const LunchEvent = require('./lunch_event').LunchEvent
 const LunchEventScheduling = require('./lunch_event_scheduling').LunchEventScheduling
 
-class MysteryLunch extends AbstractInterfaceObject {
+class MysteryLunch extends InterfaceObject {
   constructor(commandHandler, writeCallback) {
-    super()
-    this.commandHandler = commandHandler
-    this.writeCallback = writeCallback
+    super(commandHandler, writeCallback)
+
     this.lunchEvents = []
     
     this.commands = [
@@ -82,20 +81,6 @@ class MysteryLunch extends AbstractInterfaceObject {
       }
     ]
   }
-
-  registerCommands() {
-    this.commands.forEach( (item, index, value) => {
-      this.commandHandler.addListener(item.key, (cmd) => { 
-        item.command(cmd) 
-      })
-    }) 
-  }
-
-  removeCommands() {
-    this.commands.forEach((item, index, value) => {
-      this.commandHandler.removeListener(item.key)
-    })
-  } 
 }
 
 module.exports = { MysteryLunch }
