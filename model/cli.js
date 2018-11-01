@@ -1,33 +1,6 @@
 const fs = require('fs')
 const EventEmitter = require('events')
-
-class CommandHandler extends EventEmitter {
-  constructor () {
-    super()
-    this.contextObject = null
-    this.interfaceObjects = []
-    this.setContextObject = (object) => { this.contextObject = object }
-    this.resetContextObject = () => { this.contextObject = null }
-  }
-
-  process(cmd) {
-    // emit cmd, if not handled then echo
-    if (this.contextObject !== null) {
-      this.emit('context', cmd)
-    } else if (!this.emit(cmd, cmd)) {
-      this.emit('echo', cmd)
-    }
-  }
-
-  registerInterfaceObject(interfaceObject, writeCallback) {
-    console.log("Registering IOB")
-    let iob = new interfaceObject(this, writeCallback)
-    console.log("Instance Created")
-    console.log(iob)
-    this.interfaceObjects.push(iob)
-    iob.registerCommands()
-  }
-}
+const CommandHandler = require('./command_handler').CommandHandler
 
 class CommandLineInterpreter {
   // Provides bindings for all variables from the abstract class
