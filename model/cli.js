@@ -1,8 +1,6 @@
 const fs = require('fs')
 const EventEmitter = require('events')
 
-const AbstractCommandLineInterpreter = require('./abstract_interfaces').AbstractCommandLineInterpreter
-
 class CommandHandler extends EventEmitter {
   constructor () {
     super()
@@ -31,10 +29,9 @@ class CommandHandler extends EventEmitter {
   }
 }
 
-class CommandLineInterpreter extends AbstractCommandLineInterpreter {
+class CommandLineInterpreter {
   // Provides bindings for all variables from the abstract class
   constructor () {
-    super()
     this.inputStream = process.stdin
     this.outputStream = process.stdout
     this.logStream = {
