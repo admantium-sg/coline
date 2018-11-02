@@ -34,3 +34,5 @@ class LunchEvent extends ContextObject {
       ], {title: '', date: '', participants: ''})
     }
 }
+
+module.exports = { LunchEvent }

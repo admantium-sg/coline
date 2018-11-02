@@ -1,8 +1,5 @@
-const AbstractContextObject = require('./abstract_interfaces').AbstractContextObject
-
-class ContextObject extends AbstractContextObject {
+class ContextObject {
   constructor(questions = [], object = { }) {
-    super()
     this.questions = questions
     this.answers = []
     this.object = object
@@ -33,6 +30,10 @@ class ContextObject extends AbstractContextObject {
 
   isComplete() {
     return this.answers.length == this.questions.length
+  }
+
+  finalize () { 
+    return 'Success message' 
   }
 }
 
