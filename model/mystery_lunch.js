@@ -1,12 +1,34 @@
 const InterfaceObject = require('./interface_object').InterfaceObject
 const LunchEvent = require('./lunch_event').LunchEvent
 const LunchEventScheduling = require('./lunch_event_scheduling').LunchEventScheduling
+const LunchEventDeletion = require('./lunch_event_deletion').LunchEventDeletion
 
 class MysteryLunch extends InterfaceObject {
   constructor(commandHandler, writeCallback) {
     super(commandHandler, writeCallback)
 
-    this.lunchEvents = []
+    this.lunchEvents = [ 
+      {
+        title: "Test Lunch 1",
+        date: "2018-11-03",
+        participants: "Sebastian, Janine, Max, Lea",
+        print: () => {
+          return '-- TITLE  : ' + "Test Lunch 1" + '\r\n'  
+                 + '-- DATE   : ' + "2018-11-03" + '\r\n'  
+                 + '-- PEOPLE : ' + "Sebastian, Janine, Max, Marco" + '\r\n'
+        }
+      }, 
+      {
+        title: "Test Lunch 2",
+        date: "2018-11-07",
+        participants: "Caro, Julia, Lea, Thomas",
+        print: () => {
+          return '-- TITLE  : ' + "Test Lunch 2" + '\r\n'  
+                 + '-- DATE   : ' + "2018-11-07" + '\r\n'  
+                 + '-- PEOPLE : ' + "Caro, Julia, Lea, Thomas" + '\r\n'
+        }
+      }
+    ]
     
     this.commands = [
       {
@@ -61,7 +83,9 @@ class MysteryLunch extends InterfaceObject {
         key: "D",
         message: "(D) Delete an event",
         command: () => {
-          this.writeCallback('result', "Not Implemented Yet")
+          this.commandHandler.setContextObject(new LunchEventDeletion(this.lunchEvents))
+          // Print first message of context object
+          this.writeCallback('question', this.commandHandler.contextObject.next().question())
         }
       },
       {
@@ -74,7 +98,11 @@ class MysteryLunch extends InterfaceObject {
           if (!cob.isComplete()) {
             this.writeCallback('question', cob.next().question())
           } else {
-            this.lunchEvents.push(cob.persist())
+            if(cob.__proto__ === LunchEvent.prototype) {
+              this.lunchEvents.push(cob.persist())
+            } else if (cob.__proto__ === LunchEventDeletion.prototype) {
+              console.log(this.lunchEvents.splice([cob.answers[0]]))
+            }
             this.writeCallback('result', cob.finalize())
             this.commandHandler.resetContextObject()
           }
