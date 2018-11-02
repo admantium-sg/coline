@@ -19,10 +19,7 @@ class CommandHandler extends EventEmitter {
   }
 
   registerInterfaceObject(interfaceObject, writeCallback) {
-    console.log("Registering IOB")
     let iob = new interfaceObject(this, writeCallback)
-    console.log("Instance Created")
-    console.log(iob)
     this.interfaceObjects.push(iob)
     iob.registerCommands()
   }

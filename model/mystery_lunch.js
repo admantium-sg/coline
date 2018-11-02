@@ -73,8 +73,10 @@ class MysteryLunch extends InterfaceObject {
           if (!cob.isComplete()) {
             this.writeCallback('question', cob.next().question())
           } else {
-            this.lunchEvents.push(cob)
+            this.lunchEvents.push(cob.persist())
+            console.log(cob.persist())
             this.writeCallback('result', cob.finalize())
+            console.log(this.lunchEvents)
             this.commandHandler.resetContextObject()
           }
         }

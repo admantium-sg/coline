@@ -33,6 +33,18 @@ class LunchEvent extends ContextObject {
         } 
       ], {title: '', date: '', participants: ''})
     }
+
+    finalize() {
+      return "Thank you, the event has been added"
+    }
+
+    persist() {
+      return {
+        title: this.answers[0],
+        date: this.answers[1],
+        participants: this.answers[2]
+      }
+    }
 }
 
 module.exports = { LunchEvent }

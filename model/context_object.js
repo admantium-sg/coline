@@ -35,6 +35,10 @@ class ContextObject {
   finalize () { 
     return 'Success message' 
   }
+
+  persist() {
+    return this.answers
+  }
 }
 
 module.exports = { ContextObject }
