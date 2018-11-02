@@ -42,7 +42,12 @@ class LunchEvent extends ContextObject {
       return {
         title: this.answers[0],
         date: this.answers[1],
-        participants: this.answers[2]
+        participants: this.answers[2],
+        print: () => {
+          return '-- TITLE  : ' + this.answers[0] + '\r\n'  
+                 + '-- DATE   : ' + this.answers[1] + '\r\n'  
+                 + '-- PEOPLE : ' + this.answers[2] + '\r\n'
+        }
       }
     }
 }

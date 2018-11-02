@@ -44,8 +44,9 @@ class MysteryLunch extends InterfaceObject {
         key: "R",
         message: "(R) Show all events",
         command: () => {
+          let i = 1
           for (let event of this.lunchEvents) {
-            event.forEach(item => this.writeCallback('result', '--- ' + item))
+            this.writeCallback('result', "Event #" + i++ +"\r\n" + event.print())
           }
         }
       },
@@ -74,9 +75,7 @@ class MysteryLunch extends InterfaceObject {
             this.writeCallback('question', cob.next().question())
           } else {
             this.lunchEvents.push(cob.persist())
-            console.log(cob.persist())
             this.writeCallback('result', cob.finalize())
-            console.log(this.lunchEvents)
             this.commandHandler.resetContextObject()
           }
         }
