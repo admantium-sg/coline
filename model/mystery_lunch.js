@@ -93,10 +93,18 @@ class MysteryLunch extends InterfaceObject {
         command: (cmd) => {
           let cob = this.commandHandler.contextObject
           cob.answer(cmd)
-          // IF incomplete print out next question
-          // ELSE Add created object and reset context object
-          if (!cob.isComplete()) {
+          // IF cob is cancelled, print out the cancel message and stop
+          if(cob.isCanceled()) {
+            console.log("Cancellation invoked for")
+            console.log(cob)
+            this.writeCallback('result', cob.stop())
+            this.commandHandler.resetContextObject()
+          }
+          // IF cob is incomplete, print out next question
+          else if (!cob.isComplete()) {
             this.writeCallback('question', cob.next().question())
+          // ELSE Add created object and reset context object
+          // Check for the type of event, and process accordingly
           } else {
             if(cob.__proto__ === LunchEvent.prototype) {
               this.lunchEvents.push(cob.persist())

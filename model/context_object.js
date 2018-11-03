@@ -1,8 +1,9 @@
 class ContextObject {
   constructor(questions = [], object = { }) {
     this.questions = questions
-    this.answers = []
     this.object = object
+    this.answers = []
+    this.cancel = false
   }
 
   next() {
@@ -19,7 +20,12 @@ class ContextObject {
     let current_question = this.questions[this.answers.length]
     // Go back one question if the answer matches the 'return' value
     if (current_question.return && current_question.return.test(msg)) {
-      this.answers.pop()
+      //When returning from the first question, stop the interactions alltogether
+      if (this.answers.length == 0) {
+        this.cancel = true;
+      } else {
+        this.answers.pop()
+      }
     //Accept answer when it confirms with the 'accept' value  
     } else if (current_question.accept.test(msg)) {
       // Check if a validate() function is defined, and then check the answer
@@ -43,6 +49,14 @@ class ContextObject {
 
   finalize () { 
     return 'Success message' 
+  }
+
+  isCanceled() {
+    return this.cancel
+  }
+
+  stop() {
+    return "Stop message"
   }
 
   persist() {

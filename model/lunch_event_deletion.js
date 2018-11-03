@@ -13,6 +13,7 @@ class LunchEventDeletion extends ContextObject {
           return 'Which event do you want to delete? (Number)' + "\r\n" + printedEvents
            },
         accept: /\d+/,
+        return: /Back/,
         validate: (index) => {
           return(!!lunchEvents[index])
         }
@@ -29,9 +30,15 @@ class LunchEventDeletion extends ContextObject {
     ])
   }
 
+  stop() {
+    return "Deletion cancelled"
+  }
+
   finalize() {
     return "The event has been deleted!"
   }
+
+  
 }
 
 module.exports = { LunchEventDeletion }
