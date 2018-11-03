@@ -2,6 +2,7 @@ const InterfaceObject = require('./interface_object').InterfaceObject
 const LunchEventCreation = require('./lunch_event_creation').LunchEventCreation
 const LunchEventScheduling = require('./lunch_event_scheduling').LunchEventScheduling
 const LunchEventDeletion = require('./lunch_event_deletion').LunchEventDeletion
+const LunchEventUpdating = require('./lunch_event_updating').LunchEventUpdating
 
 class MysteryLunch extends InterfaceObject {
   constructor(commandHandler, writeCallback) {
@@ -76,7 +77,8 @@ class MysteryLunch extends InterfaceObject {
         key: "U",
         message: "(U) Update an event",
         command: () => {
-          this.writeCallback('result', "Not Implemented Yet")
+          this.commandHandler.setContextObject(new LunchEventUpdating(this.lunchEvents))
+          this.writeCallback('question', this.commandHandler.contextObject.next().question())
         }
       },
       {
@@ -84,7 +86,6 @@ class MysteryLunch extends InterfaceObject {
         message: "(D) Delete an event",
         command: () => {
           this.commandHandler.setContextObject(new LunchEventDeletion(this.lunchEvents))
-          // Print first message of context object
           this.writeCallback('question', this.commandHandler.contextObject.next().question())
         }
       },
@@ -108,6 +109,8 @@ class MysteryLunch extends InterfaceObject {
               this.lunchEvents.push(cob.persist())
             } else if (cob.__proto__ === LunchEventDeletion.prototype) {
               this.lunchEvents.splice([cob.answers[0]],1)
+            } else if (cob.__proto__ === LunchEventUpdating.prototype) {
+              this.lunchEvents.splice(cob.answers[0],1, cob.persist())
             }
             this.writeCallback('result', cob.finalize())
             this.commandHandler.resetContextObject()

@@ -10,13 +10,13 @@ class LunchEventCreation extends ContextObject {
         },
         {
           id: 2,
-          question: () => { return "When is the event going to happen? (Any signs) / 'Back'"},
+          question: () => { return "When is the event going to happen? (Any signs / 'Back')"},
           accept: /.*/,
           return: /Back/
         }, 
         {
           id: 3,
-          question: () => { return "Who is partcipating? (Any signs, seperated by comma) / 'Back'"},
+          question: () => { return "Who is partcipating? (Any signs, seperated by comma / 'Back')"},
           accept: /.*/,
           return: /Back/
         }, 
