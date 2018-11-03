@@ -21,7 +21,7 @@ class LunchEventDeletion extends ContextObject {
       {
         id: 2,
         question: () => { 
-          return "Do you want to delete the following event? (Yes/Back/Exit) " + "\r\n"
+          return "Do you want to delete the following event? ('Yes' / 'Back') " + "\r\n"
           + "Name: '" + lunchEvents[this.answers[0]].title + "'" + "\r\n"
           + "Participants: '" + lunchEvents[this.answers[0]].participants + "'" },
         accept: /Yes/,

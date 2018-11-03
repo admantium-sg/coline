@@ -17,7 +17,7 @@ class LunchEventScheduling extends ContextObject {
       {
         id: 2,
         question: () => { 
-          return "Do you want to schedule the following event? (Yes/Back) " + "\r\n"
+          return "Do you want to schedule the following event? ('Yes' / 'Back') " + "\r\n"
           + "Name: '" + this.lunchEvents[this.answers[0]].title + "'" + "\r\n"
           + "Participants: '" + this.lunchEvents[this.answers[0]].participants + "'" },
         accept: /Yes/,
@@ -25,7 +25,7 @@ class LunchEventScheduling extends ContextObject {
       },
       {
         id: 3,
-        question: () => { return "How many groups do you want make?" },
+        question: () => { return "How many groups do you want make? (Number / 'Back')" },
         accept: /\d+/,
         return: /Back/
       },
@@ -35,7 +35,7 @@ class LunchEventScheduling extends ContextObject {
           let groups = this.shuffleParticipants(this.lunchEvents[this.answers[0]].participants, this.answers[2])
           let printedGroups = '', i = 1
           groups.forEach( (item,index,arr) => { printedGroups += i++ + ". " + item.join(", ") + "\r\n" })
-          return "Do you accept the following groups? (Yes / No to repeat / Back)" + "\r\n"
+          return "Do you accept the following groups? ('Yes' / 'No' to repeat / 'Back')" + "\r\n"
           + printedGroups
           },
         accept: /Yes/,
@@ -61,6 +61,14 @@ class LunchEventScheduling extends ContextObject {
       result.push(arr)
     }
     return result
+  }
+
+  finalize() {
+    return "Thank you, the event has been scheduled"
+  }
+
+  stop() {
+    return "Event scheduling cancelled"
   }
 
 }

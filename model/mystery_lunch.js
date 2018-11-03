@@ -1,5 +1,5 @@
 const InterfaceObject = require('./interface_object').InterfaceObject
-const LunchEvent = require('./lunch_event').LunchEvent
+const LunchEventCreation = require('./lunch_event_creation').LunchEventCreation
 const LunchEventScheduling = require('./lunch_event_scheduling').LunchEventScheduling
 const LunchEventDeletion = require('./lunch_event_deletion').LunchEventDeletion
 
@@ -47,7 +47,7 @@ class MysteryLunch extends InterfaceObject {
         message: "(C) Create new event",
         command: () => {
           // Bind new lunch event to context object
-          this.commandHandler.setContextObject(new LunchEvent())
+          this.commandHandler.setContextObject(new LunchEventCreation())
           // Print first message of context object
           this.writeCallback('question', this.commandHandler.contextObject.next().question())
         }
@@ -104,11 +104,10 @@ class MysteryLunch extends InterfaceObject {
           // ELSE Add created object and reset context object
           // Check for the type of event, and process accordingly
           } else {
-            if(cob.__proto__ === LunchEvent.prototype) {
+            if(cob.__proto__ === LunchEventCreation.prototype) {
               this.lunchEvents.push(cob.persist())
             } else if (cob.__proto__ === LunchEventDeletion.prototype) {
-              console.log("Removing ITEM " + cob.answers[0])
-              console.log(this.lunchEvents.splice([cob.answers[0]],1))
+              this.lunchEvents.splice([cob.answers[0]],1)
             }
             this.writeCallback('result', cob.finalize())
             this.commandHandler.resetContextObject()

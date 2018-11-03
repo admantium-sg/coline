@@ -1,29 +1,29 @@
 const ContextObject = require('./context_object').ContextObject
 
-class LunchEvent extends ContextObject {
+class LunchEventCreation extends ContextObject {
     constructor() {
       super([
         {
           id: 1,
-          question: () => { return 'What is the name of the event?' },
+          question: () => { return 'What is the name of the event? (Any signs)' },
           accept: /.*/
         },
         {
           id: 2,
-          question: () => { return "When is the event going to happen? (Any sign) / 'Back'"},
+          question: () => { return "When is the event going to happen? (Any signs) / 'Back'"},
           accept: /.*/,
           return: /Back/
         }, 
         {
           id: 3,
-          question: () => { return "Who is partcipating? (Any sign) / 'Back'"},
+          question: () => { return "Who is partcipating? (Any signs, seperated by comma) / 'Back'"},
           accept: /.*/,
           return: /Back/
         }, 
         {
           id: 4,
           question: () => { 
-            return "Do you want to create this event? (Yes / No)" + '\r\n' 
+            return "Do you want to create this event? ('Yes' / 'Back')" + '\r\n' 
             + '-- TITLE  : ' + this.answers[0] + '\r\n'
             + '-- DATE   : ' + this.answers[1] + '\r\n'
             + '-- PEOPLE : ' + this.answers[2] + '\r\n'
@@ -36,6 +36,10 @@ class LunchEvent extends ContextObject {
 
     finalize() {
       return "Thank you, the event has been added"
+    }
+  
+    stop() {
+      return "Event creation cancelled"
     }
 
     persist() {
@@ -52,4 +56,4 @@ class LunchEvent extends ContextObject {
     }
 }
 
-module.exports = { LunchEvent }
+module.exports = { LunchEventCreation }
