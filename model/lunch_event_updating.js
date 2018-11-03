@@ -57,7 +57,7 @@ class LunchEventUpdating extends ContextObject {
           accept: /Yes/,
           return: /Back/
         } 
-      ], {title: '', date: '', participants: ''})
+      ])
     }
 
     finalize() {

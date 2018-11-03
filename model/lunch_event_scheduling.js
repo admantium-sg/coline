@@ -42,7 +42,7 @@ class LunchEventScheduling extends ContextObject {
         repeat: /No/,
         return: /Back/,
       }
-    ], {title: '', date: '', participants: ''})
+    ])
     
     this.lunchEvents = lunchEvents
   }

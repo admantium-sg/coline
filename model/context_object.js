@@ -1,7 +1,6 @@
 class ContextObject {
-  constructor(questions = [], object = { }) {
+  constructor(questions = []) {
     this.questions = questions
-    this.object = object
     this.answers = []
     this.cancel = false
   }
@@ -14,7 +13,7 @@ class ContextObject {
   }
 
   answer(msg) {
-    // Don't accept answer if the object is complete
+    // Don't accept answer when all questions are answered
     if (this.isComplete()) return false
 
     let current_question = this.questions[this.answers.length]
