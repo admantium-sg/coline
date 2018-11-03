@@ -19,7 +19,10 @@ class ContextObject {
 
     let current_question = this.questions[this.answers.length]
     // Go back one question if the answer matches the 'return' value
-    if (current_question.return && current_question.return.test(msg)) {
+    if(msg == "Stop") {
+      this.cancel = true
+    }
+    else if (current_question.return && current_question.return.test(msg)) {
       //When returning from the first question, stop the interactions alltogether
       if (this.answers.length == 0) {
         this.cancel = true;

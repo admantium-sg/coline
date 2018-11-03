@@ -95,8 +95,6 @@ class MysteryLunch extends InterfaceObject {
           cob.answer(cmd)
           // IF cob is cancelled, print out the cancel message and stop
           if(cob.isCanceled()) {
-            console.log("Cancellation invoked for")
-            console.log(cob)
             this.writeCallback('result', cob.stop())
             this.commandHandler.resetContextObject()
           }
