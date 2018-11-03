@@ -1,5 +1,5 @@
 #!/usr/bin/node
-// Prepare merge with branch E_generic_interface_objects
+// Prepare merge with branch 06_crud_lunch_events
 const CommandLineInterpreter = require('./model/index').CommandLineInterpreter
 const MysteryLunch = require('./model/index').MysteryLunch
 
