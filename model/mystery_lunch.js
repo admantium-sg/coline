@@ -101,7 +101,8 @@ class MysteryLunch extends InterfaceObject {
             if(cob.__proto__ === LunchEvent.prototype) {
               this.lunchEvents.push(cob.persist())
             } else if (cob.__proto__ === LunchEventDeletion.prototype) {
-              console.log(this.lunchEvents.splice([cob.answers[0]]))
+              console.log("Removing ITEM " + cob.answers[0])
+              console.log(this.lunchEvents.splice([cob.answers[0]],1))
             }
             this.writeCallback('result', cob.finalize())
             this.commandHandler.resetContextObject()

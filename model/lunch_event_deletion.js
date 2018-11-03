@@ -26,7 +26,11 @@ class LunchEventDeletion extends ContextObject {
         accept: /Yes/,
         return: /Back/
       }
-    ], {title: '', date: '', participants: ''})
+    ])
+  }
+
+  finalize() {
+    return "The event has been deleted!"
   }
 }
 

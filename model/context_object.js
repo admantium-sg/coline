@@ -22,7 +22,16 @@ class ContextObject {
       this.answers.pop()
     //Accept answer when it confirms with the 'accept' value  
     } else if (current_question.accept.test(msg)) {
-      this.answers.push(msg)
+      // Check if a validate() function is defined, and then check the answer
+      if(!!current_question.validate) {
+        if(current_question.validate(msg)) {
+          this.answers.push(msg)
+        }
+      //When no validate() function is defined, accept the answer
+      } else {
+        this.answers.push(msg)
+      } 
+    // All other cases
     } else {
       // Do nothing
     }
