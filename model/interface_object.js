@@ -5,8 +5,6 @@ class InterfaceObject {
   }
 
   registerCommands() {
-    console.log("CALLED")
-    console.log(this.commands)
     this.commands.forEach( (item, index, value) => {
       this.commandHandler.addListener(item.key, (cmd) => { 
         item.command(cmd) 
