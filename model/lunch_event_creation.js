@@ -1,4 +1,5 @@
 const ContextObject = require('./context_object').ContextObject
+const LunchEvent = require('./lunch_event').LunchEvent
 
 class LunchEventCreation extends ContextObject {
     constructor() {
@@ -43,16 +44,7 @@ class LunchEventCreation extends ContextObject {
     }
 
     persist() {
-      return {
-        title: this.answers[0],
-        date: this.answers[1],
-        participants: this.answers[2],
-        print: () => {
-          return '-- TITLE  : ' + this.answers[0] + '\r\n'  
-                 + '-- DATE   : ' + this.answers[1] + '\r\n'  
-                 + '-- PEOPLE : ' + this.answers[2] + '\r\n'
-        }
-      }
+      return new LunchEvent(this.answers[0], this.answers[1], this.answers[2])
     }
 }
 

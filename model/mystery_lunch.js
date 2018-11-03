@@ -1,4 +1,5 @@
 const InterfaceObject = require('./interface_object').InterfaceObject
+const LunchEvent = require('./lunch_event').LunchEvent
 const LunchEventCreation = require('./lunch_event_creation').LunchEventCreation
 const LunchEventScheduling = require('./lunch_event_scheduling').LunchEventScheduling
 const LunchEventDeletion = require('./lunch_event_deletion').LunchEventDeletion
@@ -9,26 +10,16 @@ class MysteryLunch extends InterfaceObject {
     super(commandHandler, writeCallback)
 
     this.lunchEvents = [ 
-      {
-        title: "Test Lunch 1",
-        date: "2018-11-03",
-        participants: "Sebastian, Janine, Max, Lea",
-        print: () => {
-          return '-- TITLE  : ' + "Test Lunch 1" + '\r\n'  
-                 + '-- DATE   : ' + "2018-11-03" + '\r\n'  
-                 + '-- PEOPLE : ' + "Sebastian, Janine, Max, Marco" + '\r\n'
-        }
-      }, 
-      {
-        title: "Test Lunch 2",
-        date: "2018-11-07",
-        participants: "Caro, Julia, Lea, Thomas",
-        print: () => {
-          return '-- TITLE  : ' + "Test Lunch 2" + '\r\n'  
-                 + '-- DATE   : ' + "2018-11-07" + '\r\n'  
-                 + '-- PEOPLE : ' + "Caro, Julia, Lea, Thomas" + '\r\n'
-        }
-      }
+      new LunchEvent(
+        "Test Lunch 1",
+        "2018-11-03",
+        "Sebastian, Janine, Max, Lea",
+      ),
+      new LunchEvent(
+        "Test Lunch 2",
+        "2018-11-07",
+        "Caro, Julia, Lea, Thomas"
+      )
     ]
     
     this.commands = [
