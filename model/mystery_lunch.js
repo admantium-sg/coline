@@ -102,6 +102,8 @@ class MysteryLunch extends InterfaceObject {
               this.lunchEvents.splice([cob.answers[0]],1)
             } else if (cob.__proto__ === LunchEventUpdating.prototype) {
               this.lunchEvents.splice(cob.answers[0],1, cob.persist())
+            } else if (cob.__proto__ === LunchEventScheduling.prototype) {
+              this.lunchEvents.splice(cob.answers[0],1, cob.persist())
             }
             this.writeCallback('result', cob.finalize())
             this.commandHandler.resetContextObject()

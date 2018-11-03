@@ -1,4 +1,5 @@
 const ContextObject = require('./context_object').ContextObject
+const LunchEvent = require('./lunch_event').LunchEvent
 
 class LunchEventScheduling extends ContextObject {
   constructor(lunchEvents) {
@@ -34,13 +35,19 @@ class LunchEventScheduling extends ContextObject {
         question: () => { 
           let groups = this.shuffleParticipants(this.lunchEvents[this.answers[0]].participants, this.answers[2])
           let printedGroups = '', i = 1
-          groups.forEach( (item,index,arr) => { printedGroups += i++ + ". " + item.join(", ") + "\r\n" })
+
+          for(let item of groups.values()) { 
+            printedGroups += i++ + ". " + item.join(", ") + "\r\n" 
+          }
+
+          this.scheduledGroups = groups
+
           return "Do you accept the following groups? ('Yes' / 'No' to repeat / 'Back')" + "\r\n"
-          + printedGroups
-          },
+            + printedGroups
+        },
         accept: /Yes/,
         repeat: /No/,
-        return: /Back/,
+        return: /Back/
       }
     ])
     
@@ -71,6 +78,13 @@ class LunchEventScheduling extends ContextObject {
     return "Event scheduling cancelled"
   }
 
+  persist() {
+    return new LunchEvent(
+      this.lunchEvents[this.answers[0]].title,
+      this.lunchEvents[this.answers[0]].date,
+      this.lunchEvents[this.answers[0]].participants,
+      this.scheduledGroups)
+  }
 }
 
 module.exports = { LunchEventScheduling }
