@@ -9,7 +9,7 @@ class CommandHandler extends EventEmitter {
     this.resetContextObject = () => { this.contextObject = null }
   }
 
-  process(cmd) {
+  process (cmd) {
     // emit cmd, if not handled then echo
     if (this.contextObject !== null) {
       this.emit('context', cmd)
@@ -18,8 +18,8 @@ class CommandHandler extends EventEmitter {
     }
   }
 
-  registerInterfaceObject(interfaceObject, writeCallback) {
-    let iob = new interfaceObject(this, writeCallback)
+  registerInterfaceObject (InterfaceObject, writeCallback) {
+    let iob = new InterfaceObject(this, writeCallback)
     this.interfaceObjects.push(iob)
     iob.registerCommands()
   }

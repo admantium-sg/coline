@@ -7,7 +7,7 @@ const LunchEventScheduling = require('./../model/index.js').LunchEventScheduling
 
 var lunchEvents = [
   {
-    title: 'First Mystery Lunch' ,
+    title: 'First Mystery Lunch',
     date: '2018-10-26',
     participants: 'Sebastian, Janine'
   },
@@ -15,7 +15,7 @@ var lunchEvents = [
     title: 'Second Mystery Lunch',
     date: '2018-11-14',
     participants: 'Karl, Max, Marco, Jana, Suzi, Tom, Jenny, Peter'
-  },
+  }
 
 ]
 
@@ -32,12 +32,12 @@ describe('LunchEventScheduling Context Object', () => {
 
   })
   xit('Should reshuffle the groups several times, with all groups being different', () => {
-    
+
   })
-  xit("Should start all over again when I enter 'Back' multiple times", () => { 
-    
+  xit("Should start all over again when I enter 'Back' multiple times", () => {
+
   })
-  xit("Finally, should schedule the events and group, returning the object", () => { 
-    
+  xit('Finally, should schedule the events and group, returning the object', () => {
+
   })
 })

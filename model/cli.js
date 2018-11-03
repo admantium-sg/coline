@@ -1,5 +1,4 @@
 const fs = require('fs')
-const EventEmitter = require('events')
 const CommandHandler = require('./command_handler').CommandHandler
 
 class CommandLineInterpreter {

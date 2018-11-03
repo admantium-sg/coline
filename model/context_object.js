@@ -1,67 +1,63 @@
 class ContextObject {
-  constructor(questions = []) {
+  constructor (questions = []) {
     this.questions = questions
     this.answers = []
     this.cancel = false
   }
 
-  next() {
-    if (this.isComplete()) 
-      return false
-    else 
-      return this.questions[this.answers.length] 
+  next () {
+    if (this.isComplete()) { return false } else { return this.questions[this.answers.length] }
   }
 
-  answer(msg) {
+  answer (msg) {
     // Don't accept answer when all questions are answered
     if (this.isComplete()) return false
 
-    let current_question = this.questions[this.answers.length]
+    let currentQuestion = this.questions[this.answers.length]
     // Go back one question if the answer matches the 'return' value
-    if(msg == "Stop") {
+    if (msg === 'Stop') {
       this.cancel = true
-    }
-    else if (current_question.return && current_question.return.test(msg)) {
-      //When returning from the first question, stop the interactions alltogether
-      if (this.answers.length == 0) {
-        this.cancel = true;
+    } else if (currentQuestion.return && currentQuestion.return.test(msg)) {
+      // When returning from the first question, stop the interactions alltogether
+      if (this.answers.length === 0) {
+        this.cancel = true
       } else {
         this.answers.pop()
       }
-    //Accept answer when it confirms with the 'accept' value  
-    } else if (current_question.accept.test(msg)) {
+    // Accept answer when it confirms with the 'accept' value
+    } else if (currentQuestion.accept.test(msg)) {
       // Check if a validate() function is defined, and then check the answer
-      if(!!current_question.validate) {
-        if(current_question.validate(msg)) {
+      if (currentQuestion.validate) {
+        if (currentQuestion.validate(msg)) {
           this.answers.push(msg)
         }
-      //When no validate() function is defined, accept the answer
+      // When no validate() function is defined, accept the answer
       } else {
         this.answers.push(msg)
-      } 
+      }
     // All other cases
     } else {
       // Do nothing
     }
   }
 
-  isComplete() {
-    return this.answers.length == this.questions.length
+  isComplete () {
+    return this.answers.length === this.questions.length
   }
 
-  finalize () { 
-    return 'Success message' 
+  finalize () {
+    return 'Success message'
   }
 
-  isCanceled() {
+  isCanceled () {
     return this.cancel
   }
 
-  stop() {
-    return "Stop message"
+  stop () {
+    return 'Stop message'
   }
 
-  persist() {
+  persist () {
     return this.answers
   }
 }
