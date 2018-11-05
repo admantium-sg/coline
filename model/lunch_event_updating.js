@@ -22,38 +22,38 @@ class LunchEventUpdating extends ContextObject {
       {
         id: 2,
         question: () => {
-          return "Do you want to update the following event? ('Yes' / 'Back') " + '\r\n' +
-            "Name: '" + lunchEvents[this.answers[0]].title + "'" + '\r\n' +
-            "Participants: '" + lunchEvents[this.answers[0]].participants + "'"
+          return `Do you want to update the following event? ('Yes' / 'Back')\r\n` +
+                 `Name: ${lunchEvents[this.answers[0]].title}\r\n` +
+                 `Participants: ${lunchEvents[this.answers[0]].participants}`
         },
         accept: /Yes/,
         return: /Back/
       },
       {
         id: 3,
-        question: () => { return "Event Name ''" + lunchEvents[this.answers[0]].title + "' - new name? (Any signs)" },
+        question: () => { return `Event Name '${lunchEvents[this.answers[0]].title}' - new name? (Any signs)` },
         accept: /.*/,
         return: /Back/
       },
       {
         id: 4,
-        question: () => { return "Event Date ''" + lunchEvents[this.answers[0]].date + "' - new date? (Any signs /'Back')" },
+        question: () => { return `Event Date '${lunchEvents[this.answers[0]].date}' - new date? (Any signs /'Back')` },
         accept: /.*/,
         return: /Back/
       },
       {
         id: 5,
-        question: () => { return "Event Participants ''" + lunchEvents[this.answers[0]].participants + "' - new participants? (Any signs, seperated by comma /'Back')" },
+        question: () => { return `Event Participants '${lunchEvents[this.answers[0]].participants}' - new participants? (Any signs, seperated by comma /'Back')` },
         accept: /.*/,
         return: /Back/
       },
       {
         id: 6,
         question: () => {
-          return "Do you want to update the event with these values? ('Yes' / 'Back')" + '\r\n' +
-            '-- TITLE  : ' + this.answers[2] + '\r\n' +
-            '-- DATE   : ' + this.answers[3] + '\r\n' +
-            '-- PEOPLE : ' + this.answers[4] + '\r\n'
+          return `Do you want to update the event with these values? ('Yes' / 'Back')\r\n` +
+          `-- TITLE  : ${this.answers[2]}\r\n` +
+          `-- DATE   : ${this.answers[3]}\r\n`+
+          `-- PEOPLE : ${this.answers[4]}\r\n`
         },
         accept: /Yes/,
         return: /Back/
