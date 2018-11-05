@@ -9,18 +9,18 @@ class LunchEventScheduling extends ContextObject {
         question: () => {
           var printedEvents = ''
           this.lunchEvents.forEach((v, k, m) => {
-            printedEvents += 'Event #' + k + ' - ' + v.title + '\r\n'
+            printedEvents += `Event #${k} - ${v.title}\r\n`
           })
-          return 'Which event do you want to schedule? (Number)' + '\r\n' + printedEvents
+          return `Which event do you want to schedule? (Number)\r\n${printedEvents}`
         },
         accept: /\d+/
       },
       {
         id: 2,
         question: () => {
-          return "Do you want to schedule the following event? ('Yes' / 'Back') " + '\r\n' +
-          "Name: '" + this.lunchEvents[this.answers[0]].title + "'" + '\r\n' +
-          "Participants: '" + this.lunchEvents[this.answers[0]].participants + "'"
+          return `Do you want to schedule the following event? ('Yes' / 'Back')\r\n` +
+          `Name: ${lunchEvents[this.answers[0]].title}\r\n` +
+          `Participants: ${lunchEvents[this.answers[0]].participants}`
         },
         accept: /Yes/,
         return: /Back/

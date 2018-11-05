@@ -13,7 +13,7 @@ class LunchEvent {
                  `-- PEOPLE : ${participants}`
 
     if (this.scheduledGroups) {
-      let printedGroups = ''; let i = 1
+      let printedGroups = '', i = 1
 
       for (let item of this.scheduledGroups.values()) {
         printedGroups += `---  ${i++}. ${item.join(',')}\r\n`

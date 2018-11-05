@@ -5,7 +5,7 @@ class LunchEventCreation extends ContextObject {
   constructor () {
     super([
       {
-        id: 1,
+        id: 'name',
         question: () => { return 'What is the name of the event? (Any signs)' },
         accept: /.*/
       },
@@ -24,10 +24,11 @@ class LunchEventCreation extends ContextObject {
       {
         id: 4,
         question: () => {
-          return "Do you want to create this event? ('Yes' / 'Back')" + '\r\n' +
-            '-- TITLE  : ' + this.answers[0] + '\r\n' +
-            '-- DATE   : ' + this.answers[1] + '\r\n' +
-            '-- PEOPLE : ' + this.answers[2] + '\r\n'
+          let title = this.answers[0], date = this.answers[1], participants = this.answers[2]
+          return `Do you want to create this event? ('Yes' / 'Back')\r\n` +
+          `-- TITLE  : ${title}\r\n` +
+          `-- DATE   : ${date}\r\n` +
+          `-- PEOPLE : ${participants}\r\n`
         },
         accept: /Yes/,
         return: /Back/
