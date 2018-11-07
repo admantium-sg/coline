@@ -2,10 +2,10 @@ const ContextObject = require('./context_object').ContextObject
 const LunchEvent = require('./lunch_event').LunchEvent
 
 class LunchEventUpdating extends ContextObject {
-  constructor (lunchEvents) {
+  constructor (lunchEvents, _currentEvent) {
     super([
       {
-        id: 1,
+        key: 'index',
         question: () => {
           var printedEvents = ''
           lunchEvents.forEach((v, k, m) => {
@@ -20,40 +20,42 @@ class LunchEventUpdating extends ContextObject {
         }
       },
       {
-        id: 2,
+        key: 'confirmaEvent',
         question: () => {
+          _currentEvent = lunchEvents[this.answers.get('index')]
+          console.log("CURRENT " + _currentEvent)
           return `Do you want to update the following event? ('Yes' / 'Back')\r\n` +
-                 `Name: ${lunchEvents[this.answers[0]].title}\r\n` +
-                 `Participants: ${lunchEvents[this.answers[0]].participants}`
+                 `Name: ${_currentEvent.title}\r\n` +
+                 `Participants: ${_currentEvent.participants}`
         },
         accept: /Yes/,
         return: /Back/
       },
       {
-        id: 3,
-        question: () => { return `Event Name '${lunchEvents[this.answers[0]].title}' - new name? (Any signs)` },
+        key: 'title',
+        question: () => { console.log("CURRENT " + _currentEvent); return `Event Name '${_currentEvent.title}' - new name? (Any signs)` },
         accept: /.*/,
         return: /Back/
       },
       {
-        id: 4,
-        question: () => { return `Event Date '${lunchEvents[this.answers[0]].date}' - new date? (Any signs /'Back')` },
+        key: 'date',
+        question: () => { return `Event Date '${_currentEvent.date}' - new date? (Any signs /'Back')` },
         accept: /.*/,
         return: /Back/
       },
       {
-        id: 5,
-        question: () => { return `Event Participants '${lunchEvents[this.answers[0]].participants}' - new participants? (Any signs, seperated by comma /'Back')` },
+        key: 'participants',
+        question: () => { return `Event Participants '${_currentEvent.participants}' - new participants? (Any signs, seperated by comma /'Back')` },
         accept: /.*/,
         return: /Back/
       },
       {
-        id: 6,
+        key: 'confirmUpdating',
         question: () => {
           return `Do you want to update the event with these values? ('Yes' / 'Back')\r\n` +
-          `-- TITLE  : ${this.answers[2]}\r\n` +
-          `-- DATE   : ${this.answers[3]}\r\n`+
-          `-- PEOPLE : ${this.answers[4]}\r\n`
+          `-- TITLE  : ${this.answers.get('title')}\r\n` +
+          `-- DATE   : ${this.answers.get('date')}\r\n`+
+          `-- PEOPLE : ${this.answers.get('participants')}\r\n`
         },
         accept: /Yes/,
         return: /Back/
@@ -70,7 +72,7 @@ class LunchEventUpdating extends ContextObject {
   }
 
   persist () {
-    return new LunchEvent(this.answers[2], this.answers[3], this.answers[4])
+    return new LunchEvent(this.answers.get('title'), this.answers.get('date'), this.answers.get('participants'))
   }
 }
 

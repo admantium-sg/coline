@@ -4,7 +4,7 @@ class LunchEventDeletion extends ContextObject {
   constructor(lunchEvents) {
     super([
       {
-        id: 1,
+        key: 'index',
         question: () => { 
           var printedEvents = ''
           lunchEvents.forEach((v,k,m) => { 
@@ -13,16 +13,17 @@ class LunchEventDeletion extends ContextObject {
           return 'Which event do you want to delete? (Number)' + "\r\n" + printedEvents
            },
         accept: /\d+/,
+        return: /Back/,
         validate: (index) => {
           return(!!lunchEvents[index])
         }
       },
       {
-        id: 2,
+        key: 'confirmDeletion',
         question: () => { 
           return `Do you want to delete the following event? (Yes/Back/Exit)\r\n` +
-          `Name: ${lunchEvents[this.answers[0]].title}\r\n` +
-          `Participants: ${lunchEvents[this.answers[0]].participants}` },
+          `Name: ${lunchEvents[this.answers.get('index')].title}\r\n` +
+          `Participants: ${lunchEvents[this.answers.get('index')].participants}` },
         accept: /Yes/,
         return: /Back/
       }
