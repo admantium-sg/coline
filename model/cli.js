@@ -29,6 +29,7 @@ class CommandLineInterpreter {
     // Starts the interface with a welcome message, and creates a listener to inputStream
     this.start = () => {
       this.writeCallback('text', new Date().toISOString() + ' Mystery Lunch Planner')
+      this.commandHandler.emit('I')
       this.writeCallback('prompt')
 
       this.inputStream.on('data', (rawData) => {

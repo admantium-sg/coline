@@ -100,6 +100,7 @@ class MysteryLunch extends InterfaceObject {
       },
       {
         key: 'I',
+        message: '(I) Show Interface',
         command: () => {
           this.writeCallback('result', 'Welcome to managing events. What do you want to do?' + '\r\n' + this.getInterface())
         }
