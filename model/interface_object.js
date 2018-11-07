@@ -5,7 +5,7 @@ class InterfaceObject {
   }
 
   registerCommands () {
-    this.commands.forEach((item, index, value) => {
+    this.commands.forEach((item) => {
       this.commandHandler.addListener(item.key, (cmd) => {
         item.command(cmd)
       })
@@ -13,9 +13,19 @@ class InterfaceObject {
   }
 
   removeCommands () {
-    this.commands.forEach((item, index, value) => {
+    this.commands.forEach((item) => {
       this.commandHandler.removeListener(item.key)
     })
+  }
+
+ getInterface() {
+    let result = ''  
+    this.commands.forEach((item) => {
+      if(!!item.message) {
+        result += item.message + '\r\n'
+      }
+    })
+    return result
   }
 }
 

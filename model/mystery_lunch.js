@@ -24,17 +24,6 @@ class MysteryLunch extends InterfaceObject {
 
     this.commands = [
       {
-        key: 'I',
-        command: () => {
-          this.writeCallback('result', ['Welcome to managing events. What do you want to do?',
-            '- (C) Create new event',
-            '- (S) Schedule an event',
-            '- (R) Show all events',
-            '- (U) Update an event',
-            '- (D) Delete an event'].join('\r\n'))
-        }
-      },
-      {
         key: 'C',
         message: '(C) Create new event',
         command: () => {
@@ -46,7 +35,7 @@ class MysteryLunch extends InterfaceObject {
       },
       {
         key: 'S',
-        message: "(S) Schedule an event'",
+        message: "(S) Schedule an event",
         command: () => {
           // Bind new lunch event to context object
           this.commandHandler.setContextObject(new LunchEventScheduling(this.lunchEvents))
@@ -98,15 +87,21 @@ class MysteryLunch extends InterfaceObject {
             if (Object.getPrototypeOf(cob) === LunchEventCreation.prototype) {
               this.lunchEvents.push(cob.persist())
             } else if (Object.getPrototypeOf(cob) === LunchEventDeletion.prototype) {
-              this.lunchEvents.splice([cob.answers[0]], 1)
+              this.lunchEvents.splice([cob.answers.get('index')], 1)
             } else if (Object.getPrototypeOf(cob) === LunchEventUpdating.prototype) {
-              this.lunchEvents.splice(cob.answers[0], 1, cob.persist())
+              this.lunchEvents.splice(cob.answers.get('index'), 1, cob.persist())
             } else if (Object.getPrototypeOf(cob) === LunchEventScheduling.prototype) {
-              this.lunchEvents.splice(cob.answers[0], 1, cob.persist())
+              this.lunchEvents.splice(cob.answers.get('index'), 1, cob.persist())
             }
             this.writeCallback('result', cob.finalize())
             this.commandHandler.resetContextObject()
           }
+        }
+      },
+      {
+        key: 'I',
+        command: () => {
+          this.writeCallback('result', 'Welcome to managing events. What do you want to do?' + '\r\n' + this.getInterface())
         }
       }
     ]

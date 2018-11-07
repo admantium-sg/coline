@@ -20,7 +20,7 @@ class LunchEventUpdating extends ContextObject {
         }
       },
       {
-        key: 'confirmaEvent',
+        key: 'confirmEvent',
         question: () => {
           _currentEvent = lunchEvents[this.answers.get('index')]
           console.log("CURRENT " + _currentEvent)

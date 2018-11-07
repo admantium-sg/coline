@@ -39,7 +39,6 @@ class ContextObject {
     } else {
       // Do nothing
     }
-    console.log(this.answers)
   }
 
   isComplete () {
