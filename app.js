@@ -1,5 +1,5 @@
 #!/usr/bin/node
-// Prepare merge with branch 06_crud_lunch_events
+// Prepare merge with branch F_improvements
 const CommandLineInterpreter = require('./model/index').CommandLineInterpreter
 const MysteryLunch = require('./model/index').MysteryLunch
 
