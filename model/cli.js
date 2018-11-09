@@ -1,14 +1,15 @@
 const fs = require('fs')
 const CommandHandler = require('./command_handler').CommandHandler
+const config = require('./../config/config')
 
 class CommandLineInterpreter {
   // Provides bindings for all variables from the abstract class
   constructor () {
-    this.inputStream = process.stdin
-    this.outputStream = process.stdout
+    this.inputStream = config.inputStream
+    this.outputStream = config.outputStream
     this.logStream = {
       write: (text) => {
-        fs.appendFileSync('./mystl.log', text, (err) => {
+        fs.appendFileSync(config.logFile, text, (err) => {
           if (err) throw err
         })
       }
@@ -21,14 +22,15 @@ class CommandLineInterpreter {
         this.writeCallback('result', "'" + cmd + "'")
       })
       this.commandHandler.on('exit', () => {
-        this.writeCallback('result', 'Exiting. Thank you for using the Mystery Lunch Planner')
+        this.writeCallback('result', config.goodbyeLine)
         this.stop()
       })
     }
 
     // Starts the interface with a welcome message, and creates a listener to inputStream
     this.start = () => {
-      this.writeCallback('text', new Date().toISOString() + ' Mystery Lunch Planner')
+      this.writeCallback('text', config.welcomeLine)
+      this.commandHandler.emit('I')
       this.writeCallback('prompt')
 
       this.inputStream.on('data', (rawData) => {
@@ -54,9 +56,22 @@ class CommandLineInterpreter {
 
     // Writes input to outputStream and logStrean
     this.writeCallback = (type, text = '') => {
-      let prompt = '$: '; let rprompt = '$> '; let nl = '\r\n'; let output = ''
+      let prompt = config.prompt
+      let rprompt = config.rprompt
+      let newLine = config.newLine
+      let output = ''
 
-      if (type === 'text') { output = text + nl } else if (type === 'log_only') { output = text + nl } else if (type === 'prompt') { output = prompt } else if (type === 'question') { output = rprompt + text + nl } else if (type === 'result') { output = rprompt + text + nl }
+      if (type === 'text') { 
+        output = text + newLine 
+      } else if (type === 'log_only') { 
+        output = text + newLine 
+      } else if (type === 'prompt') { 
+        output = prompt 
+      } else if (type === 'question') { 
+        output = rprompt + text + newLine 
+      } else if (type === 'result') { 
+        output = rprompt + text + newLine 
+      }
 
       if (type === 'log_only') {
         this.logStream.write(output)

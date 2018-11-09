@@ -5,29 +5,31 @@ class LunchEventCreation extends ContextObject {
   constructor () {
     super([
       {
-        id: 1,
+        key: 'title',
         question: () => { return 'What is the name of the event? (Any signs)' },
-        accept: /.*/
+        accept: /.*/,
+        return: /Back/
       },
       {
-        id: 2,
+        key: 'date',
         question: () => { return "When is the event going to happen? (Any signs / 'Back')" },
         accept: /.*/,
         return: /Back/
       },
       {
-        id: 3,
+        key: 'participants',
         question: () => { return "Who is partcipating? (Any signs, seperated by comma / 'Back')" },
         accept: /.*/,
         return: /Back/
       },
       {
-        id: 4,
+        key: 'confirmCreation',
         question: () => {
-          return "Do you want to create this event? ('Yes' / 'Back')" + '\r\n' +
-            '-- TITLE  : ' + this.answers[0] + '\r\n' +
-            '-- DATE   : ' + this.answers[1] + '\r\n' +
-            '-- PEOPLE : ' + this.answers[2] + '\r\n'
+          console.log(this.answers)
+          return `Do you want to create this event? ('Yes' / 'Back')\r\n` +
+          `-- TITLE  : ${this.answers.get('title')}\r\n` +
+          `-- DATE   : ${this.answers.get('date')}\r\n` +
+          `-- PEOPLE : ${this.answers.get('participants')}\r\n`
         },
         accept: /Yes/,
         return: /Back/
@@ -44,7 +46,7 @@ class LunchEventCreation extends ContextObject {
   }
 
   persist () {
-    return new LunchEvent(this.answers[0], this.answers[1], this.answers[2])
+    return new LunchEvent(this.answers.get('title'), this.answers.get('date'), this.answers.get('participants'))
   }
 }
 

@@ -2,39 +2,42 @@ const ContextObject = require('./context_object').ContextObject
 const LunchEvent = require('./lunch_event').LunchEvent
 
 class LunchEventScheduling extends ContextObject {
-  constructor (lunchEvents) {
+  constructor (lunchEvents, _currentEvent) {
     super([
       {
-        id: 1,
+        key: 'index',
         question: () => {
           var printedEvents = ''
           this.lunchEvents.forEach((v, k, m) => {
-            printedEvents += 'Event #' + k + ' - ' + v.title + '\r\n'
+            printedEvents += `Event #${k} - ${v.title}\r\n`
           })
-          return 'Which event do you want to schedule? (Number)' + '\r\n' + printedEvents
+          return `Which event do you want to schedule? (Number)\r\n${printedEvents}`
         },
-        accept: /\d+/
+        accept: /\d+/,
+        return: /Back/
       },
       {
-        id: 2,
+        key: 'confirmEvent',
         question: () => {
-          return "Do you want to schedule the following event? ('Yes' / 'Back') " + '\r\n' +
-          "Name: '" + this.lunchEvents[this.answers[0]].title + "'" + '\r\n' +
-          "Participants: '" + this.lunchEvents[this.answers[0]].participants + "'"
+          _currentEvent = lunchEvents[this.answers.get('index')]
+          console.log(_currentEvent)
+          return `Do you want to schedule the following event? ('Yes' / 'Back')\r\n` +
+          `Name: ${_currentEvent.title}\r\n` +
+          `Participants: ${_currentEvent.participants}`
         },
         accept: /Yes/,
         return: /Back/
       },
       {
-        id: 3,
+        key: 'numberOfGroups',
         question: () => { return "How many groups do you want make? (Number / 'Back')" },
         accept: /\d+/,
         return: /Back/
       },
       {
-        id: 4,
+        key: 'confirmaScheduling',
         question: () => {
-          let groups = this.shuffleParticipants(this.lunchEvents[this.answers[0]].participants, this.answers[2])
+          let groups = this.shuffleParticipants(_currentEvent.participants, this.answers.get('numberOfGroups'))
           let printedGroups = ''; let i = 1
 
           for (let item of groups.values()) {
@@ -80,9 +83,9 @@ class LunchEventScheduling extends ContextObject {
 
   persist () {
     return new LunchEvent(
-      this.lunchEvents[this.answers[0]].title,
-      this.lunchEvents[this.answers[0]].date,
-      this.lunchEvents[this.answers[0]].participants,
+      this.lunchEvents[this.answers.get('index')].title,
+      this.lunchEvents[this.answers.get('index')].date,
+      this.lunchEvents[this.answers.get('index')].participants,
       this.scheduledGroups)
   }
 }
