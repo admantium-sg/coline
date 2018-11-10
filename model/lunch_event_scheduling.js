@@ -20,7 +20,6 @@ class LunchEventScheduling extends ContextObject {
         key: 'confirmEvent',
         question: () => {
           _currentEvent = lunchEvents[this.answers.get('index')]
-          console.log(_currentEvent)
           return `Do you want to schedule the following event? ('Yes' / 'Back')\r\n` +
           `Name: ${_currentEvent.title}\r\n` +
           `Participants: ${_currentEvent.participants}`

@@ -5,22 +5,14 @@ const LunchEventScheduling = require('./lunch_event_scheduling').LunchEventSched
 const LunchEventDeletion = require('./lunch_event_deletion').LunchEventDeletion
 const LunchEventUpdating = require('./lunch_event_updating').LunchEventUpdating
 
+const fs = require('fs')
+const config = require('./../config/config')
+
 class MysteryLunch extends InterfaceObject {
   constructor (commandHandler, writeCallback) {
     super(commandHandler, writeCallback)
 
-    this.lunchEvents = [
-      new LunchEvent(
-        'Test Lunch 1',
-        '2018-11-03',
-        'Sebastian, Janine, Max, Lea'
-      ),
-      new LunchEvent(
-        'Test Lunch 2',
-        '2018-11-07',
-        'Caro, Julia, Lea, Thomas'
-      )
-    ]
+    this.lunchEvents = []
 
     this.commands = [
       {
@@ -102,7 +94,30 @@ class MysteryLunch extends InterfaceObject {
         key: 'I',
         message: '(I) Show Interface',
         command: () => {
-          this.writeCallback('result', 'Welcome to managing events. What do you want to do?' + '\r\n' + this.getInterface())
+          this.writeCallback('result', 'Welcome to managing lunch events. What do you want to do?' + '\r\n' + this.getInterface())
+        }
+      },
+      {
+        key: 'Save',
+        message: '(Save) Save all events to a file',
+        command: () => {
+          fs.writeFileSync(config.storeFile, JSON.stringify(this.lunchEvents))
+          this.writeCallback('result', `Saved all lunch events to '${config.storeFile}'`)
+        }
+      },
+      {
+        key: 'Load',
+        message: '(Load) Load events from the default file',
+        command: () => {
+          let lunchEventsJSON = JSON.parse(fs.readFileSync(config.storeFile))
+          lunchEventsJSON.forEach( (lunch) => {
+            if(!!lunch.scheduledGroups) {
+              this.lunchEvents.push(new LunchEvent(lunch.title, lunch.date, lunch.participants, lunch.scheduledGroups))  
+            } else { 
+              this.lunchEvents.push(new LunchEvent(lunch.title, lunch.date, lunch.participants))
+            }
+          })
+          this.writeCallback('result', `Load all lunch events from '${config.storeFile}'`)
         }
       }
     ]

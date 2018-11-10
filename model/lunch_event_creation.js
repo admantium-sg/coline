@@ -25,7 +25,6 @@ class LunchEventCreation extends ContextObject {
       {
         key: 'confirmCreation',
         question: () => {
-          console.log(this.answers)
           return `Do you want to create this event? ('Yes' / 'Back')\r\n` +
           `-- TITLE  : ${this.answers.get('title')}\r\n` +
           `-- DATE   : ${this.answers.get('date')}\r\n` +

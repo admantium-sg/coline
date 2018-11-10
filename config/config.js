@@ -3,7 +3,7 @@ const config = {
     outputStream: process.stdout,
 
     logFile:  './mystl.log',
-    storeFile: '.msytl.json',
+    storeFile: './mystl.json',
 
     prompt: '$: ',
     rprompt: '$> ',
