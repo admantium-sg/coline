@@ -1,5 +1,5 @@
 #!/usr/bin/node
-// Prepare merge with branch F_improvements
+// Prepare merge with branch 07_persisting_events
 const CommandLineInterpreter = require('./model/index').CommandLineInterpreter
 const MysteryLunch = require('./model/index').MysteryLunch
 
