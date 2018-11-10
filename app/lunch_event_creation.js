@@ -1,4 +1,4 @@
-const ContextObject = require('./context_object').ContextObject
+const ContextObject = require('./../model/index').ContextObject
 const LunchEvent = require('./lunch_event').LunchEvent
 
 class LunchEventCreation extends ContextObject {

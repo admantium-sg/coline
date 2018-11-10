@@ -1,4 +1,4 @@
-const InterfaceObject = require('./interface_object').InterfaceObject
+const InterfaceObject = require('./../model/index').InterfaceObject
 const LunchEvent = require('./lunch_event').LunchEvent
 const LunchEventCreation = require('./lunch_event_creation').LunchEventCreation
 const LunchEventScheduling = require('./lunch_event_scheduling').LunchEventScheduling

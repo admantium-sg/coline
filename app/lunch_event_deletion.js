@@ -1,4 +1,4 @@
-const ContextObject = require('./context_object').ContextObject
+const ContextObject = require('./../model/index').ContextObject
 
 class LunchEventDeletion extends ContextObject {
   constructor(lunchEvents) {
