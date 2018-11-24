@@ -43,7 +43,7 @@ describe('MysteryLunch Interface Object', () => {
   })
   it("should print the 'Thank You' message when I finished the object creation", () => {
     output = test_stdout.inspectSync(() => {
-      test_stdin.send('Sebastian, Janine')
+      test_stdin.send('Sebastian, Caro')
     })
     match = /Thank you! The event is registered\./.test(output)
     assert.ok(match)
@@ -59,7 +59,7 @@ describe('MysteryLunch Interface Object', () => {
     match = /2018-11-05/.test(output)
     assert.ok(match)
 
-    match = /Sebastian, Janine/.test(output)
+    match = /Sebastian, Caro/.test(output)
     assert.ok(match)
   })
 })
