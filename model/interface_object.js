@@ -10,9 +10,10 @@ class InterfaceObject {
    * @param {Object} commandHandler - The command handler to which the interface object listens 
    * @param {Object} writeCallback - The object on which ``write`` is executed to print answers
    */
-  constructor (commandHandler, writeCallback) {
+  constructor (commandHandler, writeCallback, commands) {
     this.commandHandler = commandHandler
     this.writeCallback = writeCallback
+    this.commands = commands || []
   }
 
   /**
@@ -30,9 +31,7 @@ class InterfaceObject {
    * Remove all commands from the CommandHandler 
    */
   removeCommands () {
-    this.commands.forEach((item) => {
-      this.commandHandler.removeListener(item.key)
-    })
+    this.commandHandler.removeAllListeners();
   }
 
  /**

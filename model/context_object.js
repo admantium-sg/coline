@@ -2,7 +2,7 @@
  * An Object that represents a dialogue consisting of questions. Questions are defined with these values:
  * * {key} Identifier ans key in the key-value map that records the answer
  * * {questions} A function that returns a message to be shown to the user. Contains code that is executed before the question is shown, for example to select the appropriate part of the obejcts.
- * * {accept} A regular exptession to which the given answer must match
+ * * {accept} A regular expression to which the given answer must match
  * * {return} A command that returns the dialogue to the previous question. If its the first question, stop the dialogue.
  * * {validate} A function that is involved to further validate the answer, for example when choosing an index value from an array
  */
@@ -87,7 +87,7 @@ class ContextObject {
   }
 
   /**
-   * When the ``Stop`` anwer is given, retunr a message to the user
+   * When the ``Stop`` answer is given, retunr a message to the user
    */
   stop () {
     return 'Stop message'
