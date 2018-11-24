@@ -4,13 +4,15 @@ var test_stdout = require('test-console').stdout
 var test_stdin = require('mock-stdin').stdin()
 
 const CommandLineInterpreter = require('./../model/index.js').CommandLineInterpreter
-const MysteryLunch = require('./../model/index.js').MysteryLunch
+const MysteryLunch = require('./../app/mystery_lunch.js').MysteryLunch
+
+console.log(MysteryLunch)
 
 let cli = new CommandLineInterpreter()
-cli.registerInterfaceObject(new MysteryLunch())
+cli.registerInterfaceObject(MysteryLunch)
 cli.setup()
 
-describe('CommandLineInterface', () => {
+describe('CommandLineInterpreter', () => {
   var output = ''
 
   it("should print 'Mystery Lunch Planner' when started", () => {
