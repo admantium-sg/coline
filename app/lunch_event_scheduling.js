@@ -15,7 +15,10 @@ const questions = function(self) {
         return `Which event do you want to schedule? (Number)\r\n${printedEvents}`
       },
       accept: /\d+/,
-      return: /Back/
+      return: /Back/,
+      validate: (index) => {
+        return(!!self.lunchEvents[index])
+      }
     },
     {
       key: 'confirmEvent',
