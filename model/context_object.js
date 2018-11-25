@@ -11,10 +11,14 @@ class ContextObject {
    * 
    * @param {Array} questions Represents all questions that are shown to the user.
    */
-  constructor (questions = []) {
-    this.questions = questions
+  constructor () {
+    this.questions = []
     this.answers = new Map()
     this.cancel = false
+  }
+
+  defineQuestions(questions) {
+  this.questions = questions
   }
 
   /**

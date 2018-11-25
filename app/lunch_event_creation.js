@@ -1,39 +1,45 @@
 const ContextObject = require('./../model/index').ContextObject
 const LunchEvent = require('./lunch_event').LunchEvent
 
+const questions = function(self) {
+  return [
+    {
+      key: 'title',
+      question: () => { return 'What is the name of the event? (Any signs)' },
+      accept: /.*/,
+      return: /Back/
+    },
+    {
+      key: 'date',
+      question: () => { return "When is the event going to happen? (Any signs / 'Back')" },
+      accept: /.*/,
+      return: /Back/
+    },
+    {
+      key: 'participants',
+      question: () => { return "Who is partcipating? (Any signs, seperated by comma / 'Back')" },
+      accept: /.*/,
+      return: /Back/
+    },
+    {
+      key: 'confirmCreation',
+      question: () => {
+        return `Do you want to create this event? ('Yes' / 'Back')\r\n` +
+        `-- TITLE  : ${self.answers.get('title')}\r\n` +
+        `-- DATE   : ${self.answers.get('date')}\r\n` +
+        `-- PEOPLE : ${self.answers.get('participants')}\r\n`
+      },
+      accept: /Yes/,
+      return: /Back/
+    }
+  ]
+}
+
 class LunchEventCreation extends ContextObject {
-  constructor () {
-    super([
-      {
-        key: 'title',
-        question: () => { return 'What is the name of the event? (Any signs)' },
-        accept: /.*/,
-        return: /Back/
-      },
-      {
-        key: 'date',
-        question: () => { return "When is the event going to happen? (Any signs / 'Back')" },
-        accept: /.*/,
-        return: /Back/
-      },
-      {
-        key: 'participants',
-        question: () => { return "Who is partcipating? (Any signs, seperated by comma / 'Back')" },
-        accept: /.*/,
-        return: /Back/
-      },
-      {
-        key: 'confirmCreation',
-        question: () => {
-          return `Do you want to create this event? ('Yes' / 'Back')\r\n` +
-          `-- TITLE  : ${this.answers.get('title')}\r\n` +
-          `-- DATE   : ${this.answers.get('date')}\r\n` +
-          `-- PEOPLE : ${this.answers.get('participants')}\r\n`
-        },
-        accept: /Yes/,
-        return: /Back/
-      }
-    ])
+
+  constructor() {
+    super()
+    this.questions = questions(this)
   }
 
   finalize () {
@@ -50,3 +56,4 @@ class LunchEventCreation extends ContextObject {
 }
 
 module.exports = { LunchEventCreation }
+
