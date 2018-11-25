@@ -33,7 +33,7 @@ class CommandLineInterpreter {
       this.commandHandler.on('echo', (cmd) => {
         this.writeCallback('result', "'" + cmd + "'")
       })
-      this.commandHandler.on('exit', () => {
+      this.commandHandler.on('Exit', () => {
         this.writeCallback('result', config.goodbyeLine)
         this.stop()
       })
