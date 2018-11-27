@@ -39,8 +39,8 @@ const questions = function(self) {
     },
     {
       key: 'date',
-      question: () => { return `Event Date '${_currentEvent.date}' - new date? (Any signs /'Back')` },
-      accept: /.*/,
+      question: () => { return `Event Date '${_currentEvent.date}' - new date? (YYYY-MM-DD /'Back')` },
+      accept: /\d{4}-\d{2}-\d{2}/,
       return: /Back/
     },
     {

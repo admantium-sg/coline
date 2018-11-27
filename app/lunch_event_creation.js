@@ -11,9 +11,10 @@ const questions = function(self) {
     },
     {
       key: 'date',
-      question: () => { return "When is the event going to happen? (Any signs / 'Back')" },
-      accept: /.*/,
-      return: /Back/
+      question: () => { return "When is the event going to happen? (YYYY-MM-DD / 'Back')" },
+      accept: /\d{4}-\d{2}-\d{2}/,
+      return: /Back/,
+      validation: () => {  }
     },
     {
       key: 'participants',
