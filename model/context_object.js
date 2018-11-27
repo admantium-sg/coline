@@ -1,15 +1,21 @@
 /**
- * An Object that represents a dialogue consisting of questions. Questions are defined with these values:
- * * {key} Identifier ans key in the key-value map that records the answer
- * * {questions} A function that returns a message to be shown to the user. Contains code that is executed before the question is shown, for example to select the appropriate part of the obejcts.
- * * {accept} A regular expression to which the given answer must match
- * * {return} A command that returns the dialogue to the previous question. If its the first question, stop the dialogue.
- * * {validate} A function that is involved to further validate the answer, for example when choosing an index value from an array
+ * An Object that represents a dialog consisting of questions. Questions are defined with these values:
+ * * ``key`` **String** - Represents The 'key 'in the key-value map that records the answer
+ * * ``questions`` **Function** - Returns the message that is shown to the user. Contains code that is executed before the question is shown, for example to select the appropriate part of the objects.
+ * * ``accept`` **RegRxp** - A pattern to which the given answer must match
+ * * ``return`` **String** - A command that returns the dialog to the previous question. If its the first question, stop the dialog.
+ * * ``validate`` **function** - When given, further validates the answer of the user, for example when choosing an index value from an array
+ * 
+ * ### Constructor 
+ * Creates a new instance with the following variables:
+ * * ``questions`` **Array** - Represents all questions that are shown to the user.
+ * * ``answers`` **Map** - A map of questions => answers
+ * * ``cancel`` **Boolean** - Flag to indicate that the context dialog is cancelled. 
  */
 class ContextObject {
   /**
    * 
-   * @param {Array} questions Represents all questions that are shown to the user.
+   * @param {Array} 
    */
   constructor () {
     this.questions = []
@@ -22,7 +28,7 @@ class ContextObject {
   }
 
   /**
-   * Returns the current question of the dialogue
+   * Returns the current question of the dialog
    */
   next() { 
     if (this.isComplete()) { return false } else { return this.questions[this.answers.size] }
@@ -30,11 +36,11 @@ class ContextObject {
 
   /**
    * Processes the user-input.
-   * * If `stop`` then exit the current dialogue
+   * * If ``stop`` then exit the current dialog
    * * If a ``return`` value is defined and the answer matches this value, return to previous question or exit if it is the first question
-   * * If the answer matches the ``accept`` value, and the optional ``validate`` funciton returns true, accept the answer and store (key => answer) in the answers array
+   * * If the answer matches the ``accept`` value, and the optional ``validate`` function returns true, accept the answer and store (key => answer) in the answers array
    * * 
-   * @param {String} answer The user-input  
+   * @param {String} answer The user input  
    */
 
   answer (answer) {
@@ -70,35 +76,35 @@ class ContextObject {
   }
 
   /**
-   * Checks if all answers of the questionnaire have been answered.
+   * Checks if all answers of the dialog are answered.
    */
   isComplete () {
     return this.answers.size == this.questions.length
   }
 
   /**
-   * Is invoked when the dialogue is completed to return the a final message to the user
+   * Is invoked when the dialog is completed to return the a final message to the user.
    */
   finalize () {
     return 'Success message'
   }
 
   /**
-   * Checks if the dialogue is cancelled, for example when the ``Stop`` answer is invoked
+   * Checks if the dialog is cancelled, for example when the ``Stop`` answer is invoked.
    */
   isCanceled () {
     return this.cancel
   }
 
   /**
-   * When the ``Stop`` answer is given, retunr a message to the user
+   * When the ``Stop`` answer is given, return a message to the user.
    */
   stop () {
     return 'Stop message'
   }
 
   /**
-   * Executed when the dialogue is finsished to persist objects that are modified or created with the given answers.
+   * Executed when the dialog is finished to persist objects that are modified or created with the given answers.
    */
   persist () {
     return this.answers

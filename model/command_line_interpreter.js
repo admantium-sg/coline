@@ -3,17 +3,18 @@ const CommandHandler = require('./command_handler').CommandHandler
 const config = require('./../config/config')
 
 /**
- * Central object that privides input and output streams.
+ * Central object that provides input and output streams.
+ * 
+ * ### Constructor 
+ * Creates an instance with the following variables:
+ * 
+ * * ``inputStream`` **Object**  - The stream that provides input data
+ * * ``outputStream`` **Object** - The stream that prints out the data
+ * * ``logStream`` **Object** - The stream to which log information is provided
+ * * ``commandHandler`` **Object** - The command handler that listens to, and emits, events
  */
 class CommandLineInterpreter {
-  /**
-   * Creates an instance with the following options:
-   * 
-   * @param {Object} inputStream - The stream that provides input data
-   * @param {Object} outputStream - The stream that prints out the data
-   * @param {Object} logStream - The stream to which log information is provided
-   * @param {Object} commandHandler - The command handler that listens to, and emits, events
-   */
+ 
   constructor () {
     this.inputStream = config.inputStream
     this.outputStream = config.outputStream
@@ -27,7 +28,7 @@ class CommandLineInterpreter {
     this.commandHandler = new CommandHandler()
 
     /**
-     * Registers basic commands, like 'echo' and 'exit'
+     * Registers basic commands, like 'echo' and 'exit'.
      */
     this.setup = () => {
       this.commandHandler.on('echo', (cmd) => {
@@ -40,10 +41,10 @@ class CommandLineInterpreter {
     }
 
     /**
-     * Starts the command line interface
+     * Starts the command line interface.
      * * Writes the ``config.welcomeLine``
      * * Writes the interface definition
-     * * Creates a listener to the ``inputStream``, that pausess the stream, calls ``process``, and resumes the stream
+     * * Creates a listener to the ``inputStream``, that pauses the stream, calls ``process``, and resumes the stream
      */ 
     this.start = () => {
       this.writeCallback('text', config.welcomeLine)
@@ -58,7 +59,9 @@ class CommandLineInterpreter {
     }
 
     /**
-     * Processes input from inputStream by logging the message and passing it to the command handler
+     * Processes input from ``inputStream`` by logging the message and passing it to the command handler.
+     * 
+     * @param {String} rawData - The raw data entered by the user
      */
     this.process = (rawData) => {
       let cmd = rawData.toString().trim()
@@ -69,14 +72,13 @@ class CommandLineInterpreter {
 
     /**
      * Stops the command line processor.
-     * Here: Only destroy the listener to inputStream
      */
     this.stop = () => {
       this.inputStream.destroy()
     }
 
     /**
-     * Writes input to the ``outputStream`` and ``logStream``
+     * Writes input to the ``outputStream`` and ``logStream``.
      * 
      * @param {String} type - Defines how the input is written, options are 'test', 'log-_only', 'question' or 'result'
      * @param {String} cmd - The command that is written 
@@ -108,7 +110,7 @@ class CommandLineInterpreter {
     }
 
     /**
-     * Registers new interfaceObjects
+     * Registers a new ``interfaceObject``.
      * 
      * @param {Object} interfaceObject - The interfaceObject that is registered
      */
