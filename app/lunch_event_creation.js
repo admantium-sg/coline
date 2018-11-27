@@ -18,7 +18,7 @@ const questions = function(self) {
     },
     {
       key: 'participants',
-      question: () => { return "Who is partcipating? (Any signs, seperated by comma / 'Back')" },
+      question: () => { return "Who is participating? (Any signs, seperated by comma / 'Back')" },
       accept: /.*/,
       return: /Back/
     },

@@ -47,8 +47,8 @@ class CommandHandler extends EventEmitter {
    * @param {Object} InterfaceObject The object that is added
    * @param {Object} writeCallback Dependency Inject the write callback to the
    */
-  registerInterfaceObject (InterfaceObject, writeCallback) {
-    let iob = new InterfaceObject(this, writeCallback)
+  registerInterfaceObject (interfaceObject, writeCallback) {
+    let iob = new interfaceObject(this, writeCallback)
     this.interfaceObjects.push(iob)
     iob.registerCommands()
   }

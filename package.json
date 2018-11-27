@@ -4,7 +4,8 @@
   "description": "A command line interface to plan mystery lunches. The user registers events and particpants through the command line. Then a concrete lunch is created by randomly forming groups from all the particopants. Why a mystery lunch? To initiate talking and knoweledge exchange with colleagues you ever wanted to go and eat out with, but out of habit never ask.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/*.js"
+    "test": "mocha test/command_line_interpreter_spec.js\r\nmocha test/command_handler_spec.js\r\nmocha test/interface_object_spec.js\r\nmocha test/context_object_spec.js\r\nmocha test/mystery_lunch_iob_spec.js",
+    "start": "node app"
   },
   "bin": {
     "mystl": "app.js"

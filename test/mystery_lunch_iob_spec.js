@@ -3,21 +3,20 @@ var assert = require('chai').assert
 var test_stdout = require('test-console').stdout
 var test_stdin = require('mock-stdin').stdin()
 
-const CommandLineInterpreter = require('./../model/index.js').CommandLineInterpreter
-const MysteryLunch = require('./../model/index.js').MysteryLunch
+const CommandLineInterpreter = require('../model/index').CommandLineInterpreter
+const MysteryLunch = require('../app/mystery_lunch').MysteryLunch
 
 let cli = new CommandLineInterpreter()
-cli.registerInterfaceObject(new MysteryLunch())
+cli.registerInterfaceObject(MysteryLunch)
 cli.setup()
 
 describe('MysteryLunch Interface Object', () => {
   var output = ''
-  it("should start the creation of an event when I type 'manage events'", () => {
+  it("should print 'Welcome to managing events' when I start the application", () => {
     output = test_stdout.inspectSync(() => {
       cli.start()
-      test_stdin.send('I')
     })
-    match = /\$> Welcome to managing events\. What do you want to do\?/.test(output)
+    match = /> Welcome to managing lunch events\. What do you want to do\?/.test(output)
     assert.ok(match)
   })
   it("should show the options 'Create New Event' and 'Show all events'", () => {
@@ -41,11 +40,11 @@ describe('MysteryLunch Interface Object', () => {
     match = /Who is participating\?/.test(output)
     assert.ok(match)
   })
-  it("should print the 'Thank You' message when I finished the object creation", () => {
+  it("should ask me for confirmation before finishing the object creation", () => {
     output = test_stdout.inspectSync(() => {
       test_stdin.send('Sebastian, Caro')
     })
-    match = /Thank you! The event is registered\./.test(output)
+    match = /Do you want to create this event\?/.test(output)
     assert.ok(match)
   })
   it('should print the event with the data I just entered', () => {

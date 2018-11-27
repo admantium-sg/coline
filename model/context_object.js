@@ -23,10 +23,6 @@ class ContextObject {
     this.cancel = false
   }
 
-  defineQuestions(questions) {
-  this.questions = questions
-  }
-
   /**
    * Returns the current question of the dialog
    */
