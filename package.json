@@ -1,14 +1,11 @@
 {
-  "name": "mystery_lunch_cli",
-  "version": "0.1.0",
-  "description": "A command line interface to plan mystery lunches. The user registers events and particpants through the command line. Then a concrete lunch is created by randomly forming groups from all the particopants. Why a mystery lunch? To initiate talking and knoweledge exchange with colleagues you ever wanted to go and eat out with, but out of habit never ask.",
-  "main": "index.js",
+  "name": "js_command_line_interpreter",
+  "version": "1.0.0",
+  "description": "Ürovides a slim and reusable framework to define command line applications with a top-level interface and several question-answer dialogs.",
+  "main": "app.js",
   "scripts": {
     "test": "mocha test/command_line_interpreter_spec.js\r\nmocha test/command_handler_spec.js\r\nmocha test/interface_object_spec.js\r\nmocha test/context_object_spec.js\r\nmocha test/mystery_lunch_iob_spec.js",
     "start": "node app"
-  },
-  "bin": {
-    "mystl": "app.js"
   },
   "dependencies": {
     "chai": "^4.2.0",

@@ -5,6 +5,7 @@ This program provides a slim and reusable framework to define command line appli
 * Clone this repository
 * Invoke ``npm install``
 * Start the example application with ``npm start``
+* Execute tests with ``npm test``
 
 # Framework
 
