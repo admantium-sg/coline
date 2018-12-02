@@ -1,4 +1,4 @@
-# JavaScript Command Line (JSC)
+# JSC - JavaScript Command Line Interface
 
 Slim and reusable framework to define command line applications with a top-level interface and several question-answer dialogs.
 
