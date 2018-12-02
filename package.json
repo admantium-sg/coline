@@ -1,6 +1,6 @@
 {
-  "name": "js_command_line_interpreter",
-  "version": "1.0.0",
+  "name": "jsc",
+  "version": "0.9.0",
   "description": "Ürovides a slim and reusable framework to define command line applications with a top-level interface and several question-answer dialogs.",
   "main": "app.js",
   "scripts": {
