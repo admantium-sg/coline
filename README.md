@@ -66,30 +66,25 @@ The interface object from which lunch events are created, modified and scheduled
     {
         key: 'C',
         message: '(C) Create new event',
-        command: () => {
-            self.commandHandler.setContextObject(new LunchEventCreation())
-            self.writeCallback('question', self.commandHandler.contextObject.next().question())
-        }
+        contextObject: LunchEventCreation
     },
     {
         key: 'S',
         message: "(S) Schedule an event",
-        command: () => {
-            self.commandHandler.setContextObject(new LunchEventScheduling(self.lunchEvents))
-            self.writeCallback('question', self.commandHandler.contextObject.next().question())
-        }
+        contextObject: LunchEventScheduling,
+        contextArgs: [lunchEvents]
     },
     {
         key: 'R',
         message: '(R) Show all events',
         command: () => {
             let i = 1
-            for (let event of self.lunchEvents) {
-                self.writeCallback('result', 'Event #' + i++ + '\r\n' + event.print())
+            for (let event of lunchEvents) {
+             self.writeCallback('result', 'Event #' + i++ + '\r\n' + event.print())
             }
         }
     },
-...
+    ...
 ]
 ```
 
