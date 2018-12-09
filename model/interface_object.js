@@ -23,11 +23,21 @@ class InterfaceObject {
   /**
    * For each command, define a listener on the ``CommandHandler``.
    */
-  registerCommands () {
+  registerCommands() {
     this.commands.forEach((item) => {
-      this.commandHandler.addListener(item.key, (cmd) => {
-        item.command(cmd)
-      })
+      //Handle contextObject declarations first
+      if (!!item.contextObject) {
+        this.commandHandler.addListener(item.key, (cmd) => {
+          this.commandHandler.setContextObject(new item.contextObject)
+          this.writeCallback('question', this.commandHandler.contextObject.next().question())
+        })
+      }
+      //... then the command declarations
+      else {
+        this.commandHandler.addListener(item.key, (cmd) => {
+          item.command(cmd)
+        })
+      }
     })
   }
 

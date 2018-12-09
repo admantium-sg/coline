@@ -13,7 +13,7 @@ const commands = function(self) {
     {
       key: 'C',
       message: '(C) Create new event',
-      contextObject:  () => new LunchEventCreation()
+      contextObject: LunchEventCreation
     },
     {
       key: 'S',
