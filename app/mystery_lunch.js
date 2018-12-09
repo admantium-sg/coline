@@ -26,7 +26,7 @@ const commands = function(self, lunchEvents) {
       message: '(R) Show all events',
       command: () => {
         let i = 1
-        for (let event of self.lunchEvents) {
+        for (let event of lunchEvents) {
           self.writeCallback('result', 'Event #' + i++ + '\r\n' + event.print())
         }
       }
@@ -34,18 +34,14 @@ const commands = function(self, lunchEvents) {
     {
       key: 'U',
       message: '(U) Update an event',
-      command: () => {
-        self.commandHandler.setContextObject(new LunchEventUpdating(self.lunchEvents))
-        self.writeCallback('question', self.commandHandler.contextObject.next().question())
-      }
+      contextObject: LunchEventUpdating,
+      contextArgs: lunchEvents
     },
     {
       key: 'D',
       message: '(D) Delete an event',
-      command: () => {
-        self.commandHandler.setContextObject(new LunchEventDeletion(self.lunchEvents))
-        self.writeCallback('question', self.commandHandler.contextObject.next().question())
-      }
+      contextObject: LunchEventDeletion,
+      contextArgs: lunchEvents
     },
     {
       key: 'context',
