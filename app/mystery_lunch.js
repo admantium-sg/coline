@@ -13,12 +13,7 @@ const commands = function(self) {
     {
       key: 'C',
       message: '(C) Create new event',
-      command: () => {
-        // Bind new lunch event to context object
-        self.commandHandler.setContextObject(new LunchEventCreation())
-        // Print first message of context object
-        self.writeCallback('question', self.commandHandler.contextObject.next().question())
-      }
+      contextObject:  () => new LunchEventCreation()
     },
     {
       key: 'S',
