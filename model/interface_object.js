@@ -28,7 +28,7 @@ class InterfaceObject {
       //Handle contextObject declarations first
       if (!!item.contextObject) {
         this.commandHandler.addListener(item.key, (cmd) => {
-          this.commandHandler.setContextObject(new item.contextObject)
+          this.commandHandler.setContextObject(new item.contextObject(item.contextArgs))
           this.writeCallback('question', this.commandHandler.contextObject.next().question())
         })
       }

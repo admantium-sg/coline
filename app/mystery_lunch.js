@@ -8,7 +8,7 @@ const LunchEventUpdating = require('./lunch_event_updating').LunchEventUpdating
 const fs = require('fs')
 const config = require('./../config/config')
 
-const commands = function(self) {
+const commands = function(self, lunchEvents) {
   return [
     {
       key: 'C',
@@ -18,12 +18,8 @@ const commands = function(self) {
     {
       key: 'S',
       message: "(S) Schedule an event",
-      command: () => {
-        // Bind new lunch event to context object
-        self.commandHandler.setContextObject(new LunchEventScheduling(self.lunchEvents))
-        // Print first message of context object
-        self.writeCallback('question', self.commandHandler.contextObject.next().question())
-      }
+      contextObject: LunchEventScheduling,
+      contextArgs: lunchEvents
     },
     {
       key: 'R',
@@ -117,7 +113,7 @@ class MysteryLunch extends InterfaceObject {
   constructor (commandHandler, writeCallback) {
     super(commandHandler, writeCallback)
     this.lunchEvents = []
-    this.commands = commands(this)
+    this.commands = commands(this, this.lunchEvents)
   }
 }
 
