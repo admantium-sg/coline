@@ -1,5 +1,6 @@
 node_modules/
 mystl.log
+mystl.json
 error.log
 try.js
 package-lock.json

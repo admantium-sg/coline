@@ -8,34 +8,25 @@ const LunchEventUpdating = require('./lunch_event_updating').LunchEventUpdating
 const fs = require('fs')
 const config = require('./../config/config')
 
-const commands = function(self) {
+const commands = function(self, lunchEvents) {
   return [
     {
       key: 'C',
       message: '(C) Create new event',
-      command: () => {
-        // Bind new lunch event to context object
-        self.commandHandler.setContextObject(new LunchEventCreation())
-        // Print first message of context object
-        self.writeCallback('question', self.commandHandler.contextObject.next().question())
-      }
+      contextObject: LunchEventCreation
     },
     {
       key: 'S',
       message: "(S) Schedule an event",
-      command: () => {
-        // Bind new lunch event to context object
-        self.commandHandler.setContextObject(new LunchEventScheduling(self.lunchEvents))
-        // Print first message of context object
-        self.writeCallback('question', self.commandHandler.contextObject.next().question())
-      }
+      contextObject: LunchEventScheduling,
+      contextArgs: [lunchEvents]
     },
     {
       key: 'R',
       message: '(R) Show all events',
       command: () => {
         let i = 1
-        for (let event of self.lunchEvents) {
+        for (let event of lunchEvents) {
           self.writeCallback('result', 'Event #' + i++ + '\r\n' + event.print())
         }
       }
@@ -43,18 +34,14 @@ const commands = function(self) {
     {
       key: 'U',
       message: '(U) Update an event',
-      command: () => {
-        self.commandHandler.setContextObject(new LunchEventUpdating(self.lunchEvents))
-        self.writeCallback('question', self.commandHandler.contextObject.next().question())
-      }
+      contextObject: LunchEventUpdating,
+      contextArgs: [lunchEvents]
     },
     {
       key: 'D',
       message: '(D) Delete an event',
-      command: () => {
-        self.commandHandler.setContextObject(new LunchEventDeletion(self.lunchEvents))
-        self.writeCallback('question', self.commandHandler.contextObject.next().question())
-      }
+      contextObject: LunchEventDeletion,
+      contextArgs: [lunchEvents]
     },
     {
       key: 'context',
@@ -122,7 +109,7 @@ class MysteryLunch extends InterfaceObject {
   constructor (commandHandler, writeCallback) {
     super(commandHandler, writeCallback)
     this.lunchEvents = []
-    this.commands = commands(this)
+    this.commands = commands(this, this.lunchEvents)
   }
 }
 
