@@ -59,15 +59,7 @@ const commands = function(self, lunchEvents) {
         // ELSE Add created object and reset context object
         // Check for the type of event, and process accordingly
         } else {
-          if (Object.getPrototypeOf(cob) === LunchEventCreation.prototype) {
-            cob.persist()
-          } else if (Object.getPrototypeOf(cob) === LunchEventDeletion.prototype) {
-            cob.persist()
-          } else if (Object.getPrototypeOf(cob) === LunchEventUpdating.prototype) {
-            cob.persist()
-          } else if (Object.getPrototypeOf(cob) === LunchEventScheduling.prototype) {
-            cob.persist()
-          }
+          cob.persist()
           self.writeCallback('result', cob.finalize())
           self.commandHandler.resetContextObject()
         }
