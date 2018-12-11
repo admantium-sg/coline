@@ -53,7 +53,11 @@ class LunchEventCreation extends ContextObject {
   }
 
   persist () {
-    this.lunchEvents.push(new LunchEvent(this.answers.get('title'), this.answers.get('date'), this.answers.get('participants')))    
+    let lunchEvent = new LunchEvent(
+      this.answers.get('title'), 
+      this.answers.get('date'), 
+      this.answers.get('participants')) 
+    this.lunchEvents.push(lunchEvent)    
   }
 }
 
