@@ -64,7 +64,7 @@ const commands = function(self, lunchEvents) {
           } else if (Object.getPrototypeOf(cob) === LunchEventDeletion.prototype) {
             cob.persist()
           } else if (Object.getPrototypeOf(cob) === LunchEventUpdating.prototype) {
-            self.lunchEvents.splice(cob.answers.get('index'), 1, cob.persist())
+            cob.persist()
           } else if (Object.getPrototypeOf(cob) === LunchEventScheduling.prototype) {
             self.lunchEvents.splice(cob.answers.get('index'), 1, cob.persist())
           }
