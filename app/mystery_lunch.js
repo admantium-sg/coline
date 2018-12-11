@@ -66,7 +66,7 @@ const commands = function(self, lunchEvents) {
           } else if (Object.getPrototypeOf(cob) === LunchEventUpdating.prototype) {
             cob.persist()
           } else if (Object.getPrototypeOf(cob) === LunchEventScheduling.prototype) {
-            self.lunchEvents.splice(cob.answers.get('index'), 1, cob.persist())
+            cob.persist()
           }
           self.writeCallback('result', cob.finalize())
           self.commandHandler.resetContextObject()

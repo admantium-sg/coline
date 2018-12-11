@@ -90,11 +90,12 @@ class LunchEventScheduling extends ContextObject {
   }
 
   persist () {
-    return new LunchEvent(
+    let lunchEvent = new LunchEvent(
       this.lunchEvents[this.answers.get('index')].title,
       this.lunchEvents[this.answers.get('index')].date,
       this.lunchEvents[this.answers.get('index')].participants,
       this.scheduledGroups)
+    this.lunchEvents.splice(this.answers.get('index'), 1, lunchEvent)
   }
 }
 
