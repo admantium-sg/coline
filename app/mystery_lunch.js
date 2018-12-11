@@ -13,7 +13,8 @@ const commands = function(self, lunchEvents) {
     {
       key: 'C',
       message: '(C) Create new event',
-      contextObject: LunchEventCreation
+      contextObject: LunchEventCreation,
+      contextArgs: [lunchEvents]
     },
     {
       key: 'S',
@@ -59,7 +60,7 @@ const commands = function(self, lunchEvents) {
         // Check for the type of event, and process accordingly
         } else {
           if (Object.getPrototypeOf(cob) === LunchEventCreation.prototype) {
-            self.lunchEvents.push(cob.persist())
+            cob.persist()
           } else if (Object.getPrototypeOf(cob) === LunchEventDeletion.prototype) {
             self.lunchEvents.splice([cob.answers.get('index')], 1)
           } else if (Object.getPrototypeOf(cob) === LunchEventUpdating.prototype) {

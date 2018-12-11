@@ -38,9 +38,10 @@ const questions = function(self) {
 
 class LunchEventCreation extends ContextObject {
 
-  constructor() {
+  constructor(lunchEvents) {
     super()
     this.questions = questions(this)
+    this.lunchEvents = lunchEvents
   }
 
   finalize () {
@@ -52,7 +53,7 @@ class LunchEventCreation extends ContextObject {
   }
 
   persist () {
-    return new LunchEvent(this.answers.get('title'), this.answers.get('date'), this.answers.get('participants'))
+    this.lunchEvents.push(new LunchEvent(this.answers.get('title'), this.answers.get('date'), this.answers.get('participants')))    
   }
 }
 
