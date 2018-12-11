@@ -43,6 +43,10 @@ class LunchEventDeletion extends ContextObject {
   finalize () {
     return 'The event has been deleted!'
   }
+
+  persist() {
+    this.lunchEvents.splice([this.answers.get('index')], 1)
+  }
 }
 
 module.exports = { LunchEventDeletion }
