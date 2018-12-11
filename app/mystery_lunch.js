@@ -45,27 +45,6 @@ const commands = function(self, lunchEvents) {
       contextArgs: [lunchEvents]
     },
     {
-      key: 'context',
-      command: (cmd) => {
-        let cob = self.commandHandler.contextObject
-        cob.answer(cmd)
-        // IF cob is cancelled, print out the cancel message and stop
-        if (cob.isCanceled()) {
-          self.writeCallback('result', cob.stop())
-          self.commandHandler.resetContextObject()
-        // IF cob is incomplete, print out next question
-        } else if (!cob.isComplete()) {
-          self.writeCallback('question', cob.next().question())
-        // ELSE Add created object and reset context object
-        // Check for the type of event, and process accordingly
-        } else {
-          cob.persist()
-          self.writeCallback('result', cob.finalize())
-          self.commandHandler.resetContextObject()
-        }
-      }
-    },
-    {
       key: 'I',
       message: '(I) Show Interface',
       command: () => {
@@ -102,7 +81,7 @@ class MysteryLunch extends InterfaceObject {
   constructor (commandHandler, writeCallback) {
     super(commandHandler, writeCallback)
     this.lunchEvents = []
-    this.commands = commands(this, this.lunchEvents)
+    this.defineCommands(commands(this, this.lunchEvents))
   }
 }
 
