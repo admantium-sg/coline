@@ -56,7 +56,7 @@ class InterfaceObject {
             this.writeCallback('result', item.verifyFailureMessage)
             return
           }
-          else if(!!item.contextArgs) {
+          else if(item.hasOwnProperty('contextArgs')) {
             this.commandHandler.setContextObject(new item.contextObject(...item.contextArgs))
           }
           else {
