@@ -13,13 +13,13 @@
     -   [resetContextObject][9]
 -   [CommandLineInterpreter][10]
     -   [Constructor][11]
-    -   [setup][12]
-    -   [start][13]
-    -   [process][14]
-        -   [Parameters][15]
-    -   [stop][16]
-    -   [writeCallback][17]
-        -   [Parameters][18]
+    -   [writeCallback][12]
+        -   [Parameters][13]
+    -   [setup][14]
+    -   [start][15]
+    -   [process][16]
+        -   [Parameters][17]
+    -   [stop][18]
     -   [registerInterfaceObject][19]
         -   [Parameters][20]
 -   [ContextObject][21]
@@ -34,10 +34,11 @@
     -   [stop][30]
     -   [persist][31]
 -   [InterfaceObject][32]
-    -   [Parameters][33]
-    -   [registerCommands][34]
-    -   [removeCommands][35]
-    -   [getInterface][36]
+    -   [Constructor][33]
+    -   [Parameters][34]
+    -   [registerCommands][35]
+    -   [removeCommands][36]
+    -   [getInterface][37]
 
 ## CommandHandler
 
@@ -64,7 +65,7 @@ Processes all commands.
 
 #### Parameters
 
--   `cmd` **[String][37]** The command to be executed
+-   `cmd` **[String][38]** The command to be executed
 
 ### registerInterfaceObject
 
@@ -72,8 +73,9 @@ Adds new interface objects and registers their commands with this CommandHandler
 
 #### Parameters
 
--   `InterfaceObject` **[Object][38]** The object that is added
--   `writeCallback` **[Object][38]** Dependency Inject the write callback to the
+-   `interfaceObject`  
+-   `writeCallback` **[Object][39]** Dependency Inject the write callback to the
+-   `InterfaceObject` **[Object][39]** The object that is added
 
 ### setContextObject
 
@@ -81,7 +83,7 @@ Set a new context object.
 
 #### Parameters
 
--   `object` **[Object][38]** The new context object.
+-   `object` **[Object][39]** The new context object.
 
 ### resetContextObject
 
@@ -99,6 +101,15 @@ Creates an instance with the following variables:
 -   `outputStream` **Object** - The stream that prints out the data
 -   `logStream` **Object** - The stream to which log information is provided
 -   `commandHandler` **Object** - The command handler that listens to, and emits, events
+
+### writeCallback
+
+Writes input to the `outputStream` and `logStream`.
+
+#### Parameters
+
+-   `type` **[String][38]** Defines how the input is written, options are 'test', 'log-\_only', 'question' or 'result'
+-   `cmd` **[String][38]** The command that is written (optional, default `''`)
 
 ### setup
 
@@ -118,20 +129,11 @@ Processes input from `inputStream` by logging the message and passing it to the 
 
 #### Parameters
 
--   `rawData` **[String][37]** The raw data entered by the user
+-   `rawData` **[String][38]** The raw data entered by the user
 
 ### stop
 
 Stops the command line processor.
-
-### writeCallback
-
-Writes input to the `outputStream` and `logStream`.
-
-#### Parameters
-
--   `type` **[String][37]** Defines how the input is written, options are 'test', 'log-\_only', 'question' or 'result'
--   `cmd` **[String][37]** The command that is written (optional, default `''`)
 
 ### registerInterfaceObject
 
@@ -139,7 +141,7 @@ Registers a new `interfaceObject`.
 
 #### Parameters
 
--   `interfaceObject` **[Object][38]** The interfaceObject that is registered
+-   `interfaceObject` **[Object][39]** The interfaceObject that is registered
 
 ## ContextObject
 
@@ -178,7 +180,7 @@ Processes the user-input.
 
 #### Parameters
 
--   `answer` **[String][37]** The user input
+-   `answer` **[String][38]** The user input
 
 ### isComplete
 
@@ -206,16 +208,21 @@ Executed when the dialog is finished to persist objects that are modified or cre
 
 -   `key` **String** - The keyboard key that invokes the command
 -   `message` **String** - The description shown to the user
--   `command` **Function** Executed when the command is invoked. Examples include reading and saving data, showing objects, creating context objects for other dialogs etc
+-   `command` **Function** - Executed when the command is invoked. Examples include reading and saving data, showing objects, creating context objects for other dialogs etc.
+-   `contextObject` **Object** - The context object that is loaded when the key is invoked. When a `contextObject` is present, the `command` is ignored
+-   `contextArgs` **Array** - Arguments passed to the command object
+-   `verify` => **Function** - Additional condition that needs to be true before the context object is loaded
+-   `verifyFailureMessage` **String** - The message shown to the user when the `verify` condition evaluates to false
 
-\###Constructor 
+### Constructor
+
 Creates a new instance that receives dependency injections.
 
 ### Parameters
 
--   `commandHandler` **[Object][38]** The command handler to which the interface object listens
--   `writeCallback` **[Object][38]** The object on which `write` is executed to print answers
--   `commands` **[Array][39]** The commands of this `InterfaceObject`
+-   `commandHandler` **[Object][39]** The command handler to which the interface object listens
+-   `writeCallback` **[Object][39]** The object on which `write` is executed to print answers
+-   `commands` **[Array][40]** The commands of this `InterfaceObject`
 
 ### registerCommands
 
@@ -251,19 +258,19 @@ Returns a newline-separated string of all commands for which a message is define
 
 [11]: #constructor-1
 
-[12]: #setup
+[12]: #writecallback
 
-[13]: #start
+[13]: #parameters-3
 
-[14]: #process-1
+[14]: #setup
 
-[15]: #parameters-3
+[15]: #start
 
-[16]: #stop
+[16]: #process-1
 
-[17]: #writecallback
+[17]: #parameters-4
 
-[18]: #parameters-4
+[18]: #stop
 
 [19]: #registerinterfaceobject-1
 
@@ -293,16 +300,18 @@ Returns a newline-separated string of all commands for which a message is define
 
 [32]: #interfaceobject
 
-[33]: #parameters-8
+[33]: #constructor-3
 
-[34]: #registercommands
+[34]: #parameters-8
 
-[35]: #removecommands
+[35]: #registercommands
 
-[36]: #getinterface
+[36]: #removecommands
 
-[37]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[37]: #getinterface
 
-[38]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+[38]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-[39]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[39]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[40]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array

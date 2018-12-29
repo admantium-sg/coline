@@ -2,9 +2,13 @@
  * ``InterfaceObject`` exposes key=>command bindings to the user. Commands are defined with these properties:
  * * ``key`` **String** - The keyboard key that invokes the command
  * * ``message`` **String** - The description shown to the user
- * * ``command`` **Function** Executed when the command is invoked. Examples include reading and saving data, showing objects, creating context objects for other dialogs etc
+ * * ``command`` **Function** - Executed when the command is invoked. Examples include reading and saving data, showing objects, creating context objects for other dialogs etc.
+ * * ``contextObject`` **Object** - The context object that is loaded when the key is invoked. When a ``contextObject`` is present, the ``command`` is ignored
+ * * ``contextArgs`` **Array** - Arguments passed to the command object
+ * * ``verify`` => **Function** - Additional condition that needs to be true before the context object is loaded
+ * * ``verifyFailureMessage`` **String** - The message shown to the user when the ``verify`` condition evaluates to false
  * 
- * ###Constructor 
+ * ### Constructor 
  * Creates a new instance that receives dependency injections.
    * @param {Object} commandHandler - The command handler to which the interface object listens 
    * @param {Object} writeCallback - The object on which ``write`` is executed to print answers

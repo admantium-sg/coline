@@ -59,7 +59,7 @@ A dialog to ask the user about creating a lunch event.
   ]
 ```
 
-The interface object from which lunch events are created, modified and scheduled 
+The interface object from which lunch events are created, modified and scheduled. 
 
 ```javascript
 [
@@ -72,7 +72,9 @@ The interface object from which lunch events are created, modified and scheduled
         key: 'S',
         message: "(S) Schedule an event",
         contextObject: LunchEventScheduling,
-        contextArgs: [lunchEvents]
+        contextArgs: [lunchEvents],
+        verify: () => lunchEvents.length != 0,
+        verifyFailureMessage: "No LunchEvents are registered, please create events first!"
     },
     {
         key: 'R',
