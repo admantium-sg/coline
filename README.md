@@ -1,4 +1,4 @@
-# JSC - JavaScript Command Line Interface
+# Coline - JavaScript Command Line Interface
 
 Slim and reusable framework to define command line applications with a top-level interface and several question-answer dialogs.
 
@@ -6,7 +6,7 @@ Slim and reusable framework to define command line applications with a top-level
 
 * Clone this repository
 * Invoke `npm install`
-* Start the example application with `npm start`
+* Start the demo application with `npm demo`
 * Execute tests with `npm test`
 
 # Framework
@@ -20,7 +20,7 @@ The framework is extensively [documented](./DOCUMENTATION.md), here is the nutsh
 
 The backend class `CommandLineInterpreter` start the application, reading from the defined `inputStream` and writing to the configured `outputStream` as well as the `logStream` (defaults to `stdin`, `stdout` and a JSON file). Input is processed by the class `CommandHandler`, an `EventEmitter` that automatically provides event bindings for all commands of the `InterfaceObject`. 
 
-# Example
+# Demo
 
 A dialog to ask the user about creating a lunch event.
 

@@ -1,13 +1,17 @@
 {
-  "name": "jsc",
-  "version": "0.9.0",
-  "description": "Ürovides a slim and reusable framework to define command line applications with a top-level interface and several question-answer dialogs.",
-  "main": "app.js",
+  "name": "coline",
+  "version": "0.9.1",
+  "description": "Provides a slim and reusable framework to define command line applications with a top-level interface and several question-answer dialogs.",
+  "main": "./model/index.js",
   "scripts": {
     "test": "mocha test/command_line_interpreter_spec.js\r\nmocha test/command_handler_spec.js\r\nmocha test/interface_object_spec.js\r\nmocha test/context_object_spec.js\r\nmocha test/mystery_lunch_iob_spec.js",
-    "start": "node app"
+    "demo": "node app"
   },
-  "dependencies": {
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/sebastian-guenther/coline.git"
+  },
+  "devDependencies": {
     "chai": "^4.2.0",
     "documentation": "^8.1.2",
     "mocha": "^5.2.0",
@@ -17,5 +21,13 @@
   },
   "author": "Sebastian Günther",
   "email": "devcon@admantium.com",
-  "license": "CC-BY-NC-4.0"
+  "license": "CC-BY-NC-4.0",
+  "keywords": [
+    "cli",
+    "terminal",
+    "command-line",
+    "stream",
+    "event-driven",
+    "node"
+  ]
 }

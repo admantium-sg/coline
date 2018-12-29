@@ -4,7 +4,7 @@ var test_stdout = require('test-console').stdout
 var test_stdin = require('mock-stdin').stdin()
 
 const CommandLineInterpreter = require('./../model/index.js').CommandLineInterpreter
-const MysteryLunch = require('./../app/mystery_lunch.js').MysteryLunch
+const MysteryLunch = require('./../demo/mystery_lunch.js').MysteryLunch
 
 let cli = new CommandLineInterpreter()
 cli.registerInterfaceObject(MysteryLunch)
