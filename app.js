@@ -1,5 +1,4 @@
 #!/usr/bin/node
-// Prepare merge with branch 'J_verify_before_loading_context_object'
 const CommandLineInterpreter = require('./model/index').CommandLineInterpreter
 const MysteryLunch = require('./app/mystery_lunch').MysteryLunch
 
