@@ -79,7 +79,11 @@ class LunchEventUpdating extends ContextObject {
   }
 
   persist () {
-    return new LunchEvent(this.answers.get('title'), this.answers.get('date'), this.answers.get('participants'))
+    let lunchEvent = new LunchEvent(
+      this.answers.get('title'), 
+      this.answers.get('date'), 
+      this.answers.get('participants'))
+    this.lunchEvents.splice(this.answers.get('index'), 1, lunchEvent)
   }
 }
 

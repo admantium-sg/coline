@@ -20,6 +20,30 @@ class InterfaceObject {
     this.commands = commands || []
   }
 
+  defineCommands(commands) {
+    this.commands = commands.concat([{
+      key: 'context',
+      command: (cmd) => {
+        let cob = this.commandHandler.contextObject
+        cob.answer(cmd)
+        // IF cob is cancelled, print out the cancel message and stop
+        if (cob.isCanceled()) {
+          this.writeCallback('result', cob.stop())
+          this.commandHandler.resetContextObject()
+          // IF cob is incomplete, print out next question
+        } else if (!cob.isComplete()) {
+          this.writeCallback('question', cob.next().question())
+          // ELSE Add created object and reset context object
+          // Check for the type of event, and process accordingly
+        } else {
+          cob.persist()
+          this.writeCallback('result', cob.finalize())
+          this.commandHandler.resetContextObject()
+        }
+      }
+    }])
+  }
+
   /**
    * For each command, define a listener on the ``CommandHandler``.
    */

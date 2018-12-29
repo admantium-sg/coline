@@ -1,5 +1,4 @@
 #!/usr/bin/node
-// Prepare merge with branch 'I_contextualized_context'
 const CommandLineInterpreter = require('./model/index').CommandLineInterpreter
 const MysteryLunch = require('./app/mystery_lunch').MysteryLunch
 
