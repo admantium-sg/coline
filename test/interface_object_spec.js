@@ -14,12 +14,21 @@ const interface_mock = [
   {
     key: "R",
     message: "Read",
-    command: () => {console.log("Read")}
+    command: () => {console.log("Read")},
+    verify: () => true
   }, 
   {
     key: "U",
     message: "Update",
-    command: () => {console.log("Update")}
+    command: () => {console.log("Update")},
+  },
+  {
+    key: "S",
+    message: "Schedule",
+    command: () => {console.log("Schedule")},
+    contextObject: "Empty",
+    verify: () => 1 >= 2,
+    verifyFailureMessage: "Can not start scheduling"
   },
   {
     key: "I",
@@ -28,7 +37,8 @@ const interface_mock = [
 ]
 
 let cmdHandler = new CommandHandler()
-let iob = new InterfaceObject(cmdHandler, {write: (arg) => {return(arg)} }, interface_mock)
+let writeCallback = (type, message) => {console.log(message)}
+let iob = new InterfaceObject(cmdHandler, writeCallback, interface_mock)
 
 iob.registerCommands()
 
@@ -67,7 +77,17 @@ describe('Interface Object', () => {
     assert.ok(match)
     match = /Read/.test(output)
     assert.ok(match)
-    match = /Update\s\s$/.test(output)
+    match = /Update/.test(output)
+    assert.ok(match)
+    match = /Schedule\s\s$/.test(output)
+    assert.ok(match)
+  })
+
+  it("should not load context objects with a failing 'verify' condition", () => {
+    output = test_stdout.inspectSync(() => {
+      cmdHandler.process('S')
+    })
+    match = /^Can not start scheduling/.test(output)
     assert.ok(match)
   })
 
@@ -83,7 +103,5 @@ describe('Interface Object', () => {
       cmdHandler.process('C')
     })
     assert.ok(output == "")
-
   })
- 
 })
