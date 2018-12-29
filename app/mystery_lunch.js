@@ -20,7 +20,9 @@ const commands = function(self, lunchEvents) {
       key: 'S',
       message: "(S) Schedule an event",
       contextObject: LunchEventScheduling,
-      contextArgs: [lunchEvents]
+      contextArgs: [lunchEvents],
+      verify: lunchEvents.length != 0, 
+      verifyFailureMessage: "No LunchEvents are registered"
     },
     {
       key: 'R',
