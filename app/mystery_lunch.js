@@ -21,8 +21,8 @@ const commands = function(self, lunchEvents) {
       message: "(S) Schedule an event",
       contextObject: LunchEventScheduling,
       contextArgs: [lunchEvents],
-      verify: lunchEvents.length != 0, 
-      verifyFailureMessage: "No LunchEvents are registered"
+      verify: () => lunchEvents.length != 0,
+      verifyFailureMessage: "No LunchEvents are registered, please create events first!"
     },
     {
       key: 'R',
@@ -38,13 +38,17 @@ const commands = function(self, lunchEvents) {
       key: 'U',
       message: '(U) Update an event',
       contextObject: LunchEventUpdating,
-      contextArgs: [lunchEvents]
+      contextArgs: [lunchEvents],
+      verify: () => lunchEvents.length != 0,
+      verifyFailureMessage: "No LunchEvents are registered, please create events first!"
     },
     {
       key: 'D',
       message: '(D) Delete an event',
       contextObject: LunchEventDeletion,
-      contextArgs: [lunchEvents]
+      contextArgs: [lunchEvents],
+      verify: () => lunchEvents.length != 0,
+      verifyFailureMessage: "No LunchEvents are registered, please create events first!"
     },
     {
       key: 'I',

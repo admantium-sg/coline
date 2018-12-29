@@ -52,7 +52,7 @@ class InterfaceObject {
       //Handle contextObject declarations first
       if (!!item.contextObject) {
         this.commandHandler.addListener(item.key, (cmd) => {
-          if(item.hasOwnProperty('verify') && !item.verify) {
+          if(item.hasOwnProperty('verify') && !item.verify()) {
             this.writeCallback('result', item.verifyFailureMessage)
             return
           }
